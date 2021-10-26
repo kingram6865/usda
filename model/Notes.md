@@ -107,7 +107,7 @@ SELECT
     a.description, 
     a.food_category_id, 
     b.nutrient_id, 
-    c.nutrient_name,
+    c.name,
     b.amount,
     c.unit_name
   FROM food a 

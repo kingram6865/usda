@@ -1,12 +1,13 @@
 const { Router } = require('express')
-const controller = require('../controllers/foods')
+const food = require('../controllers/foods')
 const router = Router()
 
-router.get('/foods', controller.sampleFood)
-// router.get('/foods/:term', food.getFoodByTerm)
-// router.get('/foods/:id', food.getFoodById)
-// router.get('/food/nutrients/:id', food.getAllNutrients)
-// router.get('/nutrients/:term', food.getNutrientByTerm)
-// router.get('/nutrients/:id', food.getNutrientById)
+router.get('/foods', food.sampleFood)
+router.get('/food/search/:term', food.getFoodByTerm)
+router.get('/food/id/:id', food.getFoodById)
+router.get('/food/nutrition/:term', food.getFoodData)
+router.get('/food/nutrients/:id', food.getAllNutrients)
+router.get('/nutrients/:term', food.getNutrientByTerm)
+router.get('/nutrients/:id', food.getNutrientById)
 
 module.exports = router

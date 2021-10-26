@@ -1,10 +1,10 @@
 const express = require('express')
 const cors = require('cors')
 const logger = require('morgan')
-const routes = require('./routes/main')
 const db = require('./db/connection')
+const routes = require('./routes/main')
 const PORT = process.env.PORT || 3019
-const SERVER = process.env.HOST || localhost
+// const SERVER = process.env.HOST || localhost
 console.log(`API Server set for PORT ${process.env.PORT} on ${process.env.HOST}`)
 
 const app = express()
@@ -15,4 +15,4 @@ app.use(express.json())
 
 app.use('/api', routes)
 
-app.listen(PORT, SERVER, () => console.log(`Listening on ${SERVER}:${PORT}`))
+app.listen(PORT, () => console.log(`Listening on ${PORT}`))
