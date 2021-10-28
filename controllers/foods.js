@@ -97,13 +97,16 @@ const getFoodData = async (req, res) => {
         })
     
         if (Array.isArray(final)) {
-          return final
+          // return final
+          output = [...final]
         } else {
-          return [intermediate]
+          // return [intermediate]
+          output = [intermediate]
         }
       } else {    
         // console.log(`Counter: [${counter}] [Line 70]: Branch 2 - New record. Intermediate \x1b[31m${intermediate}\x1b[0m, Total Foods in list: \x1b[32m${final.length}\x1b[0m`)
-        final.forEach(x => console.log(`\t\x1b[36m${x.description}\x1b[0m`))
+        // final.forEach(x => console.log(`\t\x1b[36m${x.description}\x1b[0m`))
+        output = (Array.isArray(final)) ? [...final] : Array()
         output.push({
           fdc_id: current.fdc_id,
           description: current.description,
@@ -118,8 +121,10 @@ const getFoodData = async (req, res) => {
             }
           ]
         })
-        return output
+        // return output
       }
+
+      return output
   }
 
   try {
@@ -141,11 +146,11 @@ const getFoodData = async (req, res) => {
   ORDER by a.fdc_id`
 
     rows = await db.any(SQL)
-    let output = rows.reduce(aggregate)
-    console.log(output)
+    let results = rows.reduce(aggregate)
+    
+    results.forEach(element => console.log('\x1b[36m', element.fdc_id, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
 
-    res.json(output)
-  
+    res.json(results)
   } catch (error) {
     res.status(500).json({ error: error.message })   
   }
