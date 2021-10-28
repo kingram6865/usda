@@ -64,6 +64,13 @@ survey_fndds_food
 | nutrient_nbr | text   |           |          | 
 | rank         | text   |           |          | 
 
+## Indexes
+
+create index idx_foodnutrient on food_nutrient(fdc_id, nutrient_id);
+create index idx_nutrient on nutrient(id)
+idx_food_category
+idx_food_id
+idx_food_name
 
 ## SQL
 
