@@ -66,6 +66,62 @@ const getNutrientById = async (req, res) => {
 
 const getFoodData = async (req, res) => {
   let rows
+  function aggregate(final, current, counter) {
+    let output = []
+
+    let firstItem = {
+      fdc_id: final.fdc_id,
+      description: final.description,
+      food_category_id: final.food_category_id,
+      nutrients: [
+        {
+          foodId: final.fdc_id, 
+          nutrientId: final.nutrient_id,
+          nutrientName: final.name,
+          amount: final.amount,
+          units: final.unit_name
+        },
+      ]    
+    }
+    
+    let intermediate = (Array.isArray(final)) ? final.find(x => x.fdc_id === current.fdc_id) : firstItem
+
+      if (intermediate) {
+        // console.log(`Counter: [${counter}] [Line 16]: \x1b[32mBranch 1, intermediate is not\x1b[0m \x1b[34mnull\x1b[0m`)
+        intermediate.nutrients.push({
+          foodId: current.fdc_id, 
+          nutrientId: current.nutrient_id,
+          nutrientName: current.name,
+          amount: current.amount,
+          units: current.unit_name
+        })
+    
+        if (Array.isArray(final)) {
+          return final
+        } else {
+          return [intermediate]
+        }
+      } else {    
+        // console.log(`Counter: [${counter}] [Line 70]: Branch 2 - New record. Intermediate \x1b[31m${intermediate}\x1b[0m, Total Foods in list: \x1b[32m${final.length}\x1b[0m`)
+        final.forEach(x => console.log(`\t\x1b[36m${x.description}\x1b[0m`))
+        output.push({
+          fdc_id: current.fdc_id,
+          description: current.description,
+          food_category_id: current.food_category_id,
+          nutrients: [
+            {
+              foodId: current.fdc_id, 
+              nutrientId: current.nutrient_id,
+              nutrientName: current.name,
+              amount: current.amount,
+              units: current.unit_name
+            }
+          ]
+        })
+        return output
+      }
+  }
+
   try {
     SQL=`  SELECT 
     a.fdc_id, 
@@ -83,11 +139,17 @@ const getFoodData = async (req, res) => {
   AND 
     food_category_id IS NOT NULL 
   ORDER by a.fdc_id`
+
     rows = await db.any(SQL)
-    res.json(rows)
+    let output = rows.reduce(aggregate)
+    console.log(output)
+
+    res.json(output)
+  
   } catch (error) {
     res.status(500).json({ error: error.message })   
   }
+
 }
 
 // async function execute() {
