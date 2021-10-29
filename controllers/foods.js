@@ -87,7 +87,6 @@ const getFoodData = async (req, res) => {
     let intermediate = (Array.isArray(final)) ? final.find(x => x.fdc_id === current.fdc_id) : firstItem
 
       if (intermediate) {
-        // console.log(`Counter: [${counter}] [Line 16]: \x1b[32mBranch 1, intermediate is not\x1b[0m \x1b[34mnull\x1b[0m`)
         intermediate.nutrients.push({
           foodId: current.fdc_id, 
           nutrientId: current.nutrient_id,
@@ -97,15 +96,11 @@ const getFoodData = async (req, res) => {
         })
     
         if (Array.isArray(final)) {
-          // return final
           output = [...final]
         } else {
-          // return [intermediate]
           output = [intermediate]
         }
       } else {    
-        // console.log(`Counter: [${counter}] [Line 70]: Branch 2 - New record. Intermediate \x1b[31m${intermediate}\x1b[0m, Total Foods in list: \x1b[32m${final.length}\x1b[0m`)
-        // final.forEach(x => console.log(`\t\x1b[36m${x.description}\x1b[0m`))
         output = (Array.isArray(final)) ? [...final] : Array()
         output.push({
           fdc_id: current.fdc_id,
@@ -121,9 +116,7 @@ const getFoodData = async (req, res) => {
             }
           ]
         })
-        // return output
       }
-
       return output
   }
 
@@ -147,29 +140,20 @@ const getFoodData = async (req, res) => {
 
     rows = await db.any(SQL)
     let results = rows.reduce(aggregate)
-    
+    // results.unshift({"itemsRetrieved": results.length})    
     results.forEach(element => console.log('\x1b[36m', element.fdc_id, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
 
-    res.json(results)
+    let data = {
+      "itemsRetrieved": results.length,
+      items: results
+    }
+
+    res.json(data)
   } catch (error) {
     res.status(500).json({ error: error.message })   
   }
 
 }
-
-// async function execute() {
-//   // const SQL = `SELECT * FROM food WHERE description LIKE '%${term}%'`
-//   // const rows = await connect.any(SQL)
-//   const output = await getFoodByTerm('garlic')
-//   console.log(output.length)
-// }
-
-// async function execute() {
-//   const result = await sampleFood()
-//   console.log(result)
-// }
-
-// execute()
 
 module.exports = {
   sampleFood,
