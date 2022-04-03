@@ -155,6 +155,19 @@ const getFoodData = async (req, res) => {
 
 }
 
+// Retrieve all foods which contain any of the essential amino acids
+const getAminoFoods = async (req, res) => {
+  let rows
+  try {
+    SQL=`
+    
+    `
+    rows = await db.any(SQL)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   sampleFood,
   getFoodByTerm,
