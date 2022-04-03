@@ -4,8 +4,9 @@ const logger = require('morgan')
 const db = require('./db/connection')
 const routes = require('./routes/main')
 const PORT = process.env.PORT || 3019
+const TIME = new Date()
 // const SERVER = process.env.HOST || localhost
-console.log(`API Server set for PORT ${process.env.PORT} on ${process.env.HOST}`)
+console.log(`API Server:  ${process.env.HOST}:${process.env.PORT} on ${TIME}`)
 
 const app = express()
 app.use(cors())
