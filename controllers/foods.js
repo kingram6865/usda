@@ -11,10 +11,44 @@ async function sampleFood (req, res) {
   }
 }
 
+async function foodCategories (req, res) {  
+  try {
+    SQL=`SELECT * FROM food_category`
+    const rows = await db.any(SQL)
+    console.log(rows)
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+async function getFoodByCategory (req, res) {  
+  try {
+    SQL=`SELECT * FROM food WHERE `
+    const rows = await db.any(SQL)
+    console.log(rows)
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+async function foodCategoriesById (req, res) {  
+  try {
+    SQL=`SELECT * FROM food_category WHERE code = '${req.params.id}'`
+    const rows = await db.any(SQL)
+    console.log(rows)
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
 const getFoodByTerm = async (req, res) => {
   let rows
   try {
-    const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE '%${req.params.term}%' and data_type NOT LIKE 'branded_food'`
+    // const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE '%${req.params.term}%' and data_type NOT LIKE 'branded_food'`
+    const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE lower('%${req.params.term.replace(/\s+/g,'\%')}%')`
     rows = await db.any(SQL)
     rows = [{"totalRecords": rows.length}, ...rows]
     res.json(rows)
@@ -22,6 +56,23 @@ const getFoodByTerm = async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 }
+
+const getNutritionForFoodById = async (req, res) => {
+  let rows, food
+  try {
+    // const SQL = `select food_nutrient.id, food_nutrient.fdc_id, food_nutrient.nutrient_id, nutrient.name, food_nutrient.amount, nutrient.unit_name from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient.fdc_id = ${req.params.id}`
+    const SQL = `select food_nutrient.*, nutrient.* from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient.fdc_id = ${req.params.id} AND food_nutrient.amount > 0`
+    const SQL2 = `SELECT * FROM food WHERE fdc_id = ${req.params.id}`
+    rows = await db.any(SQL)
+    food = await db.any(SQL2)
+    console.log(rows)
+    rows = [{"#ofNutrients": rows.length}, ...food, ...rows]
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: `getNutritionForFoodById() ${error}` })
+  }
+}
+
 
 const getFoodById = async (req, res) => {
   let rows
@@ -37,18 +88,20 @@ const getFoodById = async (req, res) => {
 const getAllNutrients = async (req, res) => {
   let rows
   try {
-    SQL=`SELECT * FROM food_nutrients WHERE fdc_id = ${req.params.id}`
+    SQL=`SELECT * FROM nutrient`
     rows = await db.any(SQL)
+    res.json(rows)
   } catch (error) {
-    console.log(error)
+    res.status(500).json({ error: error.message })
   }
 }
 
 const getNutrientByTerm = async (req, res) => {
-  let rows = {result: 'In progress'}
+  let rows
   try {
-    SQL=``
+    SQL=`SELECT * FROM nutrient WHERE name LIKE '%${req.params.id}%'`
     rows = await db.any(SQL)
+    res.json(rows)
   } catch (error) {
     console.log(error)
   }
@@ -57,8 +110,9 @@ const getNutrientByTerm = async (req, res) => {
 const getNutrientById = async (req, res) => {
   let rows = {result: 'In progress'}
   try {
-    SQL=``
+    SQL=`SELECT * from nutrient WHERE id = ${req.params.id}`
     rows = await db.any(SQL)
+    res.json(rows)
   } catch (error) {
     console.log(error)
   }
@@ -175,5 +229,8 @@ module.exports = {
   getAllNutrients,
   getNutrientByTerm,
   getNutrientById,
-  getFoodData
+  getFoodData,
+  foodCategories,
+  foodCategoriesById,
+  getNutritionForFoodById
 }
