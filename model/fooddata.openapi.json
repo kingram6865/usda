@@ -1,0 +1,274 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "USDA Food Information Database",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/api/food": {
+      "get": {
+        "summary": "Get a sample response",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fdc_id": {
+                      "type": "integer",
+                      "enum": "",
+                      "description": "food code id"
+                    },
+                    "data_type": {
+                      "type": "string",
+                      "enum": "",
+                      "description": "Identifies data set to which the food belongs"
+                    },
+                    "description": {
+                      "type": "string",
+                      "enum": "",
+                      "description": "Description of the food item"
+                    },
+                    "food_category_id": {
+                      "type": "integer",
+                      "enum": "",
+                      "description": "Food Category id"
+                    },
+                    "publication_date": {
+                      "type": "date",
+                      "enum": "",
+                      "description": "Date/Time value of record"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "not found"
+          }
+        }
+      },
+      "parameters": ""
+    },
+    "/food/search/{term}": {
+      "get": {
+        "summary": "Search on a specific food name term",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "paramaters": {
+        "name": "term",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minimum": 1
+        }
+      }
+    },
+    "/food/id/:id": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food/nutrition/:term": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food/nutrients": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food/nutrients/:id": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food/nutrients/:term": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food/categories": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food/categories/:id": {
+        "get": {
+        "summary": "",
+        "description": "",
+        "paramaters": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "",
+                  "properties": {
+                    "<someproperty>": {
+                      "type": "",
+                      "enum": "",
+                      "description": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
