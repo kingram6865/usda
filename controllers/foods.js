@@ -199,7 +199,8 @@ const getFoodData = async (req, res) => {
     results.forEach(element => console.log('\x1b[36m', element.fdc_id, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
 
     let data = {
-      "itemsRetrieved": results.length,
+      "itemsAvailable": results.length,
+      "itemsRetrieved": results.slice(0, limit).length,
       items: (limit) ? results.slice(0, limit) : results
     }
 
