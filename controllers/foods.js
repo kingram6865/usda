@@ -201,7 +201,7 @@ const getFoodData = async (req, res) => {
 
     let data = {
       "itemsRetrieved": results.length,
-      items: (limit) ? results : results.slice(limit)
+      items: (limit) ? results : results.slice(0, limit)
     }
 
     res.json(data)
