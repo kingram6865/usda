@@ -119,10 +119,8 @@ const getNutrientById = async (req, res) => {
 }
 
 const getFoodData = async (req, res) => {
-  let rows, max
-  max = 10
-  let limit = req.query.pages
-  console.log(typeof parseInt(limit))
+  let rows
+  let limit = parseInt(req.query.pages)
   function aggregate(final, current, counter) {
     let output = []
 
@@ -202,7 +200,7 @@ const getFoodData = async (req, res) => {
 
     let data = {
       "itemsRetrieved": results.length,
-      items: (max) ? results.slice(0, 5) : results
+      items: (limit) ? results.slice(0, limit) : results
     }
 
     res.json(data)
