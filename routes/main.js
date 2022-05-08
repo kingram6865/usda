@@ -3,7 +3,7 @@ const food = require('../controllers/foods')
 const router = Router()
 
 router.get('/food/search/:term', food.getFoodByTerm)
-router.get('/food/nutrientlist', food.getAllNutrients)
+router.get('/food/nutrients', food.getAllNutrients)
 // router.get('/food/nutrients/:id', food.getNutritionForFoodById)
 router.get('/food/nutrition/:term', food.getFoodData)
 router.get('/food/nutrients/:id', food.getNutrientById)
