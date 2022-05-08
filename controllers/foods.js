@@ -22,6 +22,10 @@ async function getAllAminos (req, res) {
 
     const data = {
       "total Number of Amino Acids": rows.length,
+      "Additional Info": [
+        'http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html',
+        'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
+      ],
       "results": rows
     }
 
@@ -40,6 +44,10 @@ async function getAllEssentialAminos (req, res) {
 
     const data = {
       "total Number of Essential Amino Acids": rows.length,
+      "Additional Info": [
+        'http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html',
+        'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
+      ],      
       "results": rows
     }
 
