@@ -11,8 +11,10 @@ async function sampleFood (req, res) {
   }
 }
 
-async function getAllAminos (req, res) {  
-  const aminos = "('tryptophan', 'arginine', 'lysine')"
+async function getAllAminos (req, res) { 
+  // Resource: http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html
+  // Resource: http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/
+  const aminos = "('alanine', 'arginine', 'asparagine', 'aspartic acid', 'cysteine', 'glutamine', 'glutamic acid', 'glycine', 'histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'proline', 'serine', 'threonine', 'tryptophan', 'tyrosine', 'valine')"
 
   try {
     SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos}`
@@ -25,7 +27,7 @@ async function getAllAminos (req, res) {
 }
 
 async function getAllEssentialAminos (req, res) {  
-  const aminos = "('tryptophan', 'arginine', 'lysine')"
+  const aminos = "('histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'threonine', 'tryptophan', 'valine')"
 
   try {
     SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos}`
