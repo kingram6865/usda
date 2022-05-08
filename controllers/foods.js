@@ -92,7 +92,7 @@ const getAllNutrients = async (req, res) => {
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error })
   }
 }
 
