@@ -90,6 +90,7 @@ const getAllNutrients = async (req, res) => {
   try {
     SQL=`SELECT * FROM nutrient`
     rows = await db.any(SQL)
+    console.log(rows)
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error })
