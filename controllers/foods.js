@@ -17,7 +17,7 @@ async function getAllAminos (req, res) {
   const aminos = "('alanine', 'arginine', 'asparagine', 'aspartic acid', 'cysteine', 'glutamine', 'glutamic acid', 'glycine', 'histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'proline', 'serine', 'threonine', 'tryptophan', 'tyrosine', 'valine')"
 
   try {
-    SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos}`
+    SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos} order by name`
     const rows = await db.any(SQL)
 
     const data = {
@@ -35,7 +35,7 @@ async function getAllEssentialAminos (req, res) {
   const aminos = "('histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'threonine', 'tryptophan', 'valine')"
 
   try {
-    SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos}`
+    SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos} order by name`
     const rows = await db.any(SQL)
 
     const data = {
