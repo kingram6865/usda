@@ -19,8 +19,13 @@ async function getAllAminos (req, res) {
   try {
     SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos}`
     const rows = await db.any(SQL)
-    console.log(rows)
-    res.json(rows)
+
+    const data = {
+      "total Number of Amino Acids": rows.length,
+      "results": rows
+    }
+
+    res.json(data)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -32,8 +37,13 @@ async function getAllEssentialAminos (req, res) {
   try {
     SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos}`
     const rows = await db.any(SQL)
-    console.log(rows)
-    res.json(rows)
+
+    const data = {
+      "total Number of Essential Amino Acids": rows.length,
+      "results": rows
+    }
+
+    res.json(data)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
