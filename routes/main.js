@@ -4,6 +4,8 @@ const router = Router()
 
 router.get('/food/search/:term', food.getFoodByTerm)
 router.get('/food/nutrients', food.getAllNutrients)
+router.get('/food/aminos', food.getAllAminos)
+router.get('/food/aminos/essential', food.getAllEssentialAminos)
 // router.get('/food/nutrients/:id', food.getNutritionForFoodById)
 router.get('/food/nutrition/:term', food.getFoodData)
 router.get('/food/nutrients/:id', food.getNutrientById)

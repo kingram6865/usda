@@ -11,6 +11,36 @@ async function sampleFood (req, res) {
   }
 }
 
+async function getAllAminos (req, res) {  
+  const aminos = [
+    'tryptophan', 'arginine', 'lysine'
+  ]
+
+  try {
+    SQL=`SELECT * FROM nutrients WHERE lower(name) IN ?`
+    const rows = await db.any(SQL, aminos)
+    console.log(rows)
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
+async function getAllEssentialAminos (req, res) {  
+  const aminos = [
+    'tryptophan', 'arginine', 'lysine'
+  ]
+
+  try {
+    SQL=`SELECT * FROM nutrients WHERE lower(name) IN ?`
+    const rows = await db.any(SQL, aminos)
+    console.log(rows)
+    res.json(rows)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}
+
 async function foodCategories (req, res) {  
   try {
     SQL=`SELECT * FROM food_category`
@@ -240,5 +270,7 @@ module.exports = {
   getFoodData,
   foodCategories,
   foodCategoriesById,
-  getNutritionForFoodById
+  getNutritionForFoodById,
+  getAllAminos,
+  getAllEssentialAminos
 }
