@@ -17,8 +17,8 @@ async function getAllAminos (req, res) {
   ]
 
   try {
-    SQL=`SELECT * FROM nutrients WHERE lower(name) IN ?`
-    const rows = await db.any(SQL, aminos)
+    SQL=`SELECT * FROM nutrients WHERE lower(name) IN ${aminos}`
+    const rows = await db.any(SQL)
     console.log(rows)
     res.json(rows)
   } catch (error) {
@@ -32,8 +32,8 @@ async function getAllEssentialAminos (req, res) {
   ]
 
   try {
-    SQL=`SELECT * FROM nutrients WHERE lower(name) IN ?`
-    const rows = await db.any(SQL, aminos)
+    SQL=`SELECT * FROM nutrients WHERE lower(name) IN ${aminos}`
+    const rows = await db.any(SQL)
     console.log(rows)
     res.json(rows)
   } catch (error) {
