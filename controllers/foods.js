@@ -88,7 +88,7 @@ const getFoodById = async (req, res) => {
 const getAllNutrients = async (req, res) => {
   let rows
   try {
-    SQL=`SELECT * FROM nutrient`
+    SQL=`SELECT * FROM branded_food`
     rows = await db.any(SQL)
     console.log(rows)
     res.json(rows)
