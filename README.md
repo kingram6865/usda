@@ -27,7 +27,10 @@ DB=
 #### Retrieve food and nutrion data by search term
 /food/nutrition/{term}
 
-#### Retrieve nutrients info by string search
+#### Retrieve list of all nutrients
+/food/nutrients
+
+#### Retrieve nutrient info, search by name
 /food/nutrients/{term}
 
 #### Retrieve a list of all nutrients
@@ -35,6 +38,8 @@ DB=
 
 #### Retrieve info about a specific nutrient by id
 /food/nutrients/{id}
+
+### Endpoints (Not yet implemented)
 
 #### Retrieve foods that contain any of the nine essential amino acids
 /food/{id}/nutrients/aminos

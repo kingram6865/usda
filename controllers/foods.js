@@ -26,6 +26,7 @@ async function getAllAminos (req, res) {
         'http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html',
         'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
       ],
+      "Notes": [],
       "results": rows
     }
 
@@ -47,7 +48,8 @@ async function getAllEssentialAminos (req, res) {
       "Additional Info": [
         'http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html',
         'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
-      ],      
+      ],
+      "Notes": [],
       "results": rows
     }
 
