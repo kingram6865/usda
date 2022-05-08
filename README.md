@@ -36,6 +36,12 @@ DB=
 #### Retrieve a list of all nutrients
 /food/nutrients
 
+#### Retrieve a list of all Amino Acids
+/food/nutrients/aminos
+
+#### Retrieve a list of all Essential Amino Acids
+/food/nutrients/aminos/essential
+
 #### Retrieve info about a specific nutrient by id
 /food/nutrients/{id}
 
