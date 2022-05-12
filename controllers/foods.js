@@ -45,12 +45,13 @@ async function getAllEssentialAminos (req, res) {
 
     const data = {
       "total Number of Essential Amino Acids": rows.length,
+      "total Records retrieved": rows.length,
       "Additional Info": [
         'http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html',
         'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
       ],
       "Notes": [],
-      "results": rows
+      "results": rows.slice(0, 9)
     }
 
     res.json(data)
