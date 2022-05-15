@@ -14,6 +14,10 @@ async function sampleFood (req, res) {
 async function getAllAminos (req, res) { 
   // Resource: http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html
   // Resource: http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/
+  const page = req.query.page
+  const limit = req.query.limit
+  const startIndex = (page - 1) * limit
+  const endIndex = page * limit
   const aminos = "('alanine', 'arginine', 'asparagine', 'aspartic acid', 'cysteine', 'glutamine', 'glutamic acid', 'glycine', 'histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'proline', 'serine', 'threonine', 'tryptophan', 'tyrosine', 'valine')"
 
   try {
@@ -27,7 +31,7 @@ async function getAllAminos (req, res) {
         'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
       ],
       "Notes": [],
-      "results": rows
+      "results": rows.slice(startIndex, endIndex)
     }
 
     res.json(data)
@@ -136,12 +140,33 @@ const getFoodById = async (req, res) => {
 
 const getAllNutrients = async (req, res) => {
   let rows
+  const page = (req.query.page) ? parseInt(req.query.page) : 1
+  const limit = (req.query.limit) ? (parseInt(req.query.limit) > 10) ? 10 : parseInt(req.query.limit) : 10
+  const startIndex = (page - 1) * limit
+  const endIndex = page * limit
+  // console.log(`${req.protocol}://${req.get('Host')}${req.baseUrl} ${req.originalUrl.split('?')[0]}`)
+  // console.log(`${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}`)
+
   try {
     SQL=`SELECT * FROM nutrient`
     rows = await db.any(SQL)
+
     const data = {
       "totalNutrients": rows.length,
-      "results": rows
+      "Results per page": limit,
+      "next": "",
+      "previous": "",
+      pages: Math.ceil(rows.length/limit),
+      "results": rows.slice(startIndex, endIndex)
+      // "results": rows
+    }
+
+    if (endIndex < rows.length) {
+      data.next = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page + 1}&limit=${limit}`
+    }
+
+    if (startIndex > 0) {
+      data.previous = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page - 1}&limit=${limit}`
     }
 
     res.json(data)
@@ -175,7 +200,11 @@ const getNutrientById = async (req, res) => {
 
 const getFoodData = async (req, res) => {
   let rows
-  let limit = parseInt(req.query.pages)
+  const page = parseInt(req.query.page) 
+  const limit = (req.query.limit > 10) ? 10 : parseInt(req.query.limit)
+  const startIndex = (page - 1) * limit
+  const endIndex = page * limit
+
   function aggregate(final, current, counter) {
     let output = []
 
@@ -254,9 +283,27 @@ const getFoodData = async (req, res) => {
     results.forEach(element => console.log('\x1b[36m', element.fdc_id, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
 
     let data = {
-      "itemsAvailable": results.length,
-      "itemsRetrieved": results.slice(0, limit).length,
-      items: (limit) ? results.slice(0, limit) : results
+      "Total Results": results.length,
+      "Results per page": `${limit} - Max 10 results per page`,
+      pages: Math.ceil(results.length/limit),
+      next: "",
+      previous: "",
+      // results: (limit) ? results.slice(0, limit) : results
+      results: results.slice(startIndex, endIndex)
+    }
+
+    if (endIndex < results.length) {
+      data.next = {
+        page: page + 1,
+        limit: limit
+      }
+    }
+
+    if (startIndex > 0) {
+      data.previous = {
+        page: page - 1,
+        limit: limit
+      }
     }
 
     res.json(data)
