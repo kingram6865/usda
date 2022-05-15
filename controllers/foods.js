@@ -14,11 +14,13 @@ async function sampleFood (req, res) {
 async function getAllAminos (req, res) { 
   // Resource: http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html
   // Resource: http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/
-  const page = req.query.page
-  const limit = req.query.limit
+  const page = (req.query.page) ? parseInt(req.query.page) : 1
+  const limit = (req.query.limit) ? parseInt(req.query.limit) : 10
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
   const aminos = "('alanine', 'arginine', 'asparagine', 'aspartic acid', 'cysteine', 'glutamine', 'glutamic acid', 'glycine', 'histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'proline', 'serine', 'threonine', 'tryptophan', 'tyrosine', 'valine')"
+
+  console.log(startIndex, endIndex)
 
   try {
     SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos} order by name`
@@ -313,11 +315,12 @@ const getFoodData = async (req, res) => {
 
 }
 
-// Retrieve all foods which contain any of the essential amino acids
+// Retrieve all foods which contain an essential amino acid in the given minimum amount
 const getAminoFoods = async (req, res) => {
   let rows
+  const amount = parseFloat(req.query.amount)
   try {
-    SQL=`
+    SQL=`SELECT
     
     `
     rows = await db.any(SQL)
