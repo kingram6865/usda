@@ -15,7 +15,7 @@ async function getAllAminos (req, res) {
   // Resource: http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html
   // Resource: http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/
   const page = (req.query.page) ? parseInt(req.query.page) : 1
-  const limit = (req.query.limit) ? parseInt(req.query.limit) : 10
+  const limit = (req.query.limit) ? (parseInt(req.query.limit) > 10) ? 10 : parseInt(req.query.limit) : 10
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
   const aminos = "('alanine', 'arginine', 'asparagine', 'aspartic acid', 'cysteine', 'glutamine', 'glutamic acid', 'glycine', 'histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'proline', 'serine', 'threonine', 'tryptophan', 'tyrosine', 'valine')"
@@ -33,7 +33,17 @@ async function getAllAminos (req, res) {
         'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
       ],
       "Notes": [],
+      previous: "",
+      next: "",
       "results": rows.slice(startIndex, endIndex)
+    }
+
+    if (endIndex < rows.length) {
+      data.next = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page + 1}&limit=${limit}`
+    }
+
+    if (startIndex > 0) {
+      data.previous = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page - 1}&limit=${limit}`
     }
 
     res.json(data)
@@ -56,7 +66,7 @@ async function getAllEssentialAminos (req, res) {
         'http://www.cryst.bbk.ac.uk/education/AminoAcid/the_twenty.html',
         'http://www.kyowahakko-bio.co.jp/english/rd/aminoscope/function/'
       ],
-      "Notes": [],
+      "Notes": ['All Aminos'],
       "results": rows.slice(0, 9)
     }
 
@@ -327,6 +337,10 @@ const getAminoFoods = async (req, res) => {
   } catch (error) {
     console.log(error)
   }
+}
+
+function paginatedResults(model) {
+  
 }
 
 module.exports = {
