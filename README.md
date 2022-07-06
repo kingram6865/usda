@@ -5,13 +5,13 @@ This project is the prototype for a full stack app which uses information from t
 ## Setup
 
 Create a `.env` file with Postgres database parameters:
-
+```
 DBUSER=
 DBPW=
 DBHOST=
 DBPORT=
 DB=
-
+```
 ## Backend - API
 
   The backend is a REST API using JavaScript and Express to develop the endpoints.
