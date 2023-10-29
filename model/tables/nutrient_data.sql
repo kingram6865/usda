@@ -36,7 +36,7 @@ CC              A1        Y    Confidence Code indicating data quality, based on
 
 */
 
-CREATE TABLE [IF NOT EXISTS] nutrient_data (
+CREATE TABLE IF NOT EXISTS nutrient_data (
   ndb_no VARCHAR(5),
   nutr_no VARCHAR(3),
   nutr_val NUMBER(10,3),

@@ -14,7 +14,7 @@ Table 11.—Data Derivation Code Description File Format
 
 */
 
-CREATE TABLE [IF NOT EXISTS] dd_code_desc (
+CREATE TABLE IF NOT EXISTS dd_code_desc (
     deriv_cd     VARCHAR(4),
     deriv_desc   VARCHAR(120)
 );

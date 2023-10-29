@@ -12,7 +12,7 @@ Description   A 140     N    The description of the LanguaL Factor Code from the
 
 */
 
-CREATE TABLE [IF NOT EXISTS] langual_factor_description (
+CREATE TABLE IF NOT EXISTS langual_factor_description (
   factor_code   VARCHAR(5), 
   description   VARCHAR(140)
 );

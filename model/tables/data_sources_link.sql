@@ -14,7 +14,7 @@ DataSrc_ID     A 6*     N        Unique ID identifying the reference/source.
 * Primary key for the Sources of Data Link file.
 */
 
-CREATE TABLE [IF NOT EXISTS] data_sources_link (
+CREATE TABLE IF NOT EXISTS data_sources_link (
   ndb_no VARCHAR(5),
   nutr_no VARCHAR(3),
   datasrc_id VARCHAR(6)

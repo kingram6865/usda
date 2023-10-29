@@ -14,7 +14,7 @@ Table 10.—Source Code File Format
 * Primary key for the Source Code file.
 */
 
-CREATE TABLE [IF NOT EXISTS] source_code (
+CREATE TABLE IF NOT EXISTS source_code (
   src_cd        VARCHAR(2),
   srccd_desc    VARCHAR(60)
 );

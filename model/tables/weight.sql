@@ -17,7 +17,7 @@ Std_Dev            N 7.3      Y     Standard deviation.
 * Primary keys for the Weight file.
 */
 
-CREATE TABLE [IF NOT EXISTS] weight (
+CREATE TABLE IF NOT EXISTS weight (
   ndb_no VARCHAR(5),
   seq VARCHAR(2),
   amount NUMBER(5,3),

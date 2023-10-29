@@ -13,7 +13,7 @@ Factor_Code     A 5*     N       The LanguaL factor from the Thesaurus.
 
 */
 
-CREATE TABLE [IF NOT EXISTS] langual_factor (
+CREATE TABLE IF NOT EXISTS langual_factor (
   ndb_no          VARCHAR(5),
   factor_code     VARCHAR(5)
 );

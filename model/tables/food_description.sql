@@ -28,7 +28,7 @@ Food Description File Format
   FdGrp_Desc    A 60       N     Name of food group.
 */
 
-CREATE TABLE [IF NOT EXISTS] food_description (
+CREATE TABLE IF NOT EXISTS food_description (
   ndb_no VARCHAR(5),
   foodgroup_code VARCHAR(4),
   long_desc VARCHAR(200),

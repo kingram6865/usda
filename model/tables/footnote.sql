@@ -19,7 +19,7 @@ Table 13.—Footnote File Format
     Footnt_Txt      A 200       N    Footnote text.
 */
 
-CREATE TABLE [IF NOT EXISTS] footnotes (
+CREATE TABLE IF NOT EXISTS footnotes (
   ndb_no          VARCHAR(5),
   footnote_no     VARCHAR(4),
   footnote_type   VARCHAR(1),

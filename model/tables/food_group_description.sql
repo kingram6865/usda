@@ -15,7 +15,7 @@ fdgrp_desc    A 60      N       Name of food group.
 
 */
 
-CREATE TABLE [IF NOT EXISTS] food_description (
+CREATE TABLE IF NOT EXISTS food_description (
   fdgrp_cd      VARCHAR(4),
   fdgrp_desc    VARCHAR(60)
 );

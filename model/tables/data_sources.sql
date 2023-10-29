@@ -17,7 +17,7 @@ End_Page       A5        Y     Ending page number of article/document.
 * Primary key for the Sources of Data file.
 */
 
-CREATE TABLE [IF NOT EXISTS] data_sources (
+CREATE TABLE IF NOT EXISTS data_sources (
   datasrc_id     VARCHAR(6),
   authors        VARCHAR(255),
   title          VARCHAR(255),

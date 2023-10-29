@@ -64,7 +64,7 @@ Refuse_Pct    N2       Percent refuse.§
 
 */
 
-CREATE TABLE [IF NOT EXISTS] abbreviated (
+CREATE TABLE IF NOT EXISTS abbreviated (
   ndb_no VARCHAR(5),
   short_desc VARCHAR(60),
   water NUMBER(10, 2),

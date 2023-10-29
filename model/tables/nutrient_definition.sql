@@ -17,7 +17,7 @@ SR_Order      N6          N     Used to sort nutrient records in the same order 
 
 */
 
-CREATE TABLE [IF NOT EXISTS] nutrient_definition (
+CREATE TABLE IF NOT EXISTS nutrient_definition (
   nutr_no VARCHAR(3),
   units VARCHAR(7),
   tagname VARCHAR(20),
