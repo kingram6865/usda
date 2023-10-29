@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS abbreviated (
   folic_acid NUMERIC(10),
   food_folate NUMERIC(10),
   folate_dfe NUMERIC(10),
-  choline_total NUMERIC(),
+  choline_total NUMERIC(10),
   b12 NUMERIC(10, 2),
   a_iu NUMERIC(10),
   a_rae NUMERIC(10),
@@ -174,4 +174,4 @@ comment on column abbreviated.gmwt2 is 'Second household weight for this item fr
 comment on column abbreviated.gmwt_desc2 is 'Description of household weight number 2.';
 comment on column abbreviated.refuse_pct is 'Percent refuse.§';
 
-comment on table aabbreviated.bbreviated is 'Contains all the food items found in the relational database, but contains the information in one record per food item.';
+comment on table abbreviated.bbreviated is 'Contains all the food items found in the relational database, but contains the information in one record per food item.';
