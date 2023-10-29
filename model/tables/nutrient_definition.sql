@@ -23,14 +23,14 @@ CREATE TABLE IF NOT EXISTS nutrient_definition (
   tagname VARCHAR(20),
   nutrdesc VARCHAR(60),
   num_dec VARCHAR(1),
-  sr_order NUMBER(6)
+  sr_order NUMERIC(6)
 );
 
-comment on column nutr_no is 'Unique 3-digit identifier code for a nutrient.';
-comment on column units is 'Units of measure (mg, g, μg, and so on).';
-comment on column tagname is 'International Network of Food Data Systems (INFOODS) Tagnames.† A unique abbreviation for a nutrient/food component developed by INFOODS to aid in the interchange of data.';
-comment on column nutrdesc is 'Name of nutrient/food component.';
-comment on column num_dec is 'Number of decimal places to which a nutrient value is rounded.';
-comment on column sr_order is 'Used to sort nutrient records in the same order as various reports produced from SR.';
+comment on column nutrient_definition.nutr_no is 'Unique 3-digit identifier code for a nutrient.';
+comment on column nutrient_definition.units is 'Units of measure (mg, g, μg, and so on).';
+comment on column nutrient_definition.tagname is 'International Network of Food Data Systems (INFOODS) Tagnames.† A unique abbreviation for a nutrient/food component developed by INFOODS to aid in the interchange of data.';
+comment on column nutrient_definition.nutrdesc is 'Name of nutrient/food component.';
+comment on column nutrient_definition.num_dec is 'Number of decimal places to which a nutrient value is rounded.';
+comment on column nutrient_definition.sr_order is 'Used to sort nutrient records in the same order as various reports produced from SR.';
 
 comment on table nutrient_definition is 'A support file to the nutrient_data table. It provides the 3-digit nutrient code, unit of measure, INFOODS tagname, and description.';

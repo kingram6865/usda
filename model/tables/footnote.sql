@@ -27,12 +27,10 @@ CREATE TABLE IF NOT EXISTS footnotes (
   footnote_text   VARCHAR(200)
 );
 
-
-comment on column ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
-comment on column footnote_no is 'Sequence number. If a given footnote applies to more than one nutrient number, the same footnote number is used. As a result, this file cannot be indexed and there is no primary key.';
-comment on column footnote_type is 'Type of footnote: D = footnote adding information to the food description; M = footnote adding information to measure description; N = footnote providing additional information on a nutrient value. If the Footnt_typ = N, the Nutr_No will also be filled in.';
-comment on column nutr_no is 'Unique 3-digit identifier code for a nutrient to which footnote applies.';
-comment on column footnote_text is 'Footnote text.';
+comment on column footnotes.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
+comment on column footnotes.footnote_no is 'Sequence number. If a given footnote applies to more than one nutrient number, the same footnote number is used. As a result, this file cannot be indexed and there is no primary key.';
+comment on column footnotes.footnote_type is 'Type of footnote: D = footnote adding information to the food description; M = footnote adding information to measure description; N = footnote providing additional information on a nutrient value. If the Footnt_typ = N, the Nutr_No will also be filled in.';
+comment on column footnotes.nutr_no is 'Unique 3-digit identifier code for a nutrient to which footnote applies.';
+comment on column footnotes.footnote_text is 'Footnote text.';
 
 comment on table footnotes is 'Contains additional information about the food item, household weight, and nutrient value.';
-

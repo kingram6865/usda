@@ -29,14 +29,14 @@ CREATE TABLE IF NOT EXISTS data_sources (
   end_page       VARCHAR(5)
 );
 
-comment on column datasrc_id is 'Unique ID identifying the reference/source.';
-comment on column authors is 'List of authors for a journal article or name of sponsoring organization for other documents.';
-comment on column title is 'Title of article or name of document, such as a report from a company or trade association.';
-comment on column year is 'Year article or document was published.';
-comment on column journal is 'Name of the journal in which the article was published.';
-comment on column vol_city is 'Volume number for journal articles, books, or reports; city where sponsoring organization is located.';
-comment on column issue_state is 'Issue number for journal article; State where the sponsoring organization is located.';
-comment on column start_page is 'Starting page number of article/document.';
-comment on column end_page is 'Ending page number of article/document.';
+comment on column data_sources.datasrc_id is 'Unique ID identifying the reference/source.';
+comment on column data_sources.authors is 'List of authors for a journal article or name of sponsoring organization for other documents.';
+comment on column data_sources.title is 'Title of article or name of document, such as a report from a company or trade association.';
+comment on column data_sources.year is 'Year article or document was published.';
+comment on column data_sources.journal is 'Name of the journal in which the article was published.';
+comment on column data_sources.vol_city is 'Volume number for journal articles, books, or reports; city where sponsoring organization is located.';
+comment on column data_sources.issue_state is 'Issue number for journal article; State where the sponsoring organization is located.';
+comment on column data_sources.start_page is 'Starting page number of article/document.';
+comment on column data_sources.end_page is 'Ending page number of article/document.';
 
 comment on table data_sources is 'Provides a citation to the datasrc_id in the data_sources_link table.';

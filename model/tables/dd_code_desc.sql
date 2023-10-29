@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS dd_code_desc (
     deriv_desc   VARCHAR(120)
 );
 
-comment on column deriv_cd is 'Derivation Code.';
-comment on column deriv_desc is 'Description of derivation code giving specific information on how the value was determined.';
+comment on column dd_code_desc.deriv_cd is 'Derivation Code.';
+comment on column dd_code_desc.deriv_desc is 'Description of derivation code giving specific information on how the value was determined.';
 
 comment on table data_derivation_code is 'dd_code_desc (Data Derivation Code Description) table provides information on how the nutrient values were determined.';

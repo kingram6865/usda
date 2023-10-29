@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS data_sources_link (
   datasrc_id VARCHAR(6)
 );
 
-comment on column ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
-comment on column nutr_no is 'Unique 3-digit identifier code for a nutrient.';
-comment on column datasrc_id is 'Unique ID identifying the reference/source.';
+comment on column data_sources_link.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
+comment on column data_sources_link.nutr_no is 'Unique 3-digit identifier code for a nutrient.';
+comment on column data_sources_link.datasrc_id is 'Unique ID identifying the reference/source.';
 
 comment on table data_sources_link is 'Used to link the Nutrient Data file with the Sources of Data table. It is needed to resolve the many-to-many relationship between the two tables.';

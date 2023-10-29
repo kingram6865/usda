@@ -67,111 +67,111 @@ Refuse_Pct    N2       Percent refuse.§
 CREATE TABLE IF NOT EXISTS abbreviated (
   ndb_no VARCHAR(5),
   short_desc VARCHAR(60),
-  water NUMBER(10, 2),
-  energy_kcal NUMBER(10),
-  protein NUMBER(10, 2),
-  lipid_total NUMBER(10, 2),
-  ash NUMBER(10, 2),
-  carbohydrate NUMBER(10, 2),
-  fiber_td NUMBER(10, 1),
-  sugar_total NUMBER(10, 2),
-  calcium NUMBER(10),
-  iron NUMBER(10, 2),
-  magnesium NUMBER(10),
-  phosphorus NUMBER(10),
-  potassium NUMBER(10),
-  sodium NUMBER(10),
-  zinc NUMBER(10, 2),
-  copper NUMBER(10, 3),
-  manganese NUMBER(10, 3),
-  selenium NUMBER(10, 1),
-  vit_c NUMBER(10, 1),
-  thiamin NUMBER(10, 3),
-  riboflavin NUMBER(10, 3),
-  niacin NUMBER(10, 3),
-  panto_acid NUMBER(10, 3),
-  vit_b6 NUMBER(10, 3),
-  folate_total NUMBER(10),
-  folic_acid NUMBER(10),
-  food_folate NUMBER(10),
-  folate_dfe NUMBER(10),
-  choline_total NUMBER(),
-  b12 NUMBER(10, 2),
-  a_iu NUMBER(10),
-  a_rae NUMBER(10),
-  retinol NUMBER(10),
-  alpha_carotene NUMBER(10),
-  beta_carotene NUMBER(10),
-  beta_crypt NUMBER(10),
-  lycopene NUMBER(10),
-  lutzea NUMBER(10),
-  e NUMBER(10, 2),
-  d_mcg NUMBER(10, 1),
-  d_iu NUMBER(10),
-  k NUMBER(10, 1),
-  fa_sat NUMBER(10, 3),
-  fa_mono NUMBER(10, 3),
-  fa_poly NUMBER(10, 3),
-  cholesterol NUMBER(10, 3),
-  bmwt1 NUMBER(9, 2),
+  water NUMERIC(10, 2),
+  energy_kcal NUMERIC(10),
+  protein NUMERIC(10, 2),
+  lipid_total NUMERIC(10, 2),
+  ash NUMERIC(10, 2),
+  carbohydrate NUMERIC(10, 2),
+  fiber_td NUMERIC(10, 1),
+  sugar_total NUMERIC(10, 2),
+  calcium NUMERIC(10),
+  iron NUMERIC(10, 2),
+  magnesium NUMERIC(10),
+  phosphorus NUMERIC(10),
+  potassium NUMERIC(10),
+  sodium NUMERIC(10),
+  zinc NUMERIC(10, 2),
+  copper NUMERIC(10, 3),
+  manganese NUMERIC(10, 3),
+  selenium NUMERIC(10, 1),
+  vit_c NUMERIC(10, 1),
+  thiamin NUMERIC(10, 3),
+  riboflavin NUMERIC(10, 3),
+  niacin NUMERIC(10, 3),
+  panto_acid NUMERIC(10, 3),
+  vit_b6 NUMERIC(10, 3),
+  folate_total NUMERIC(10),
+  folic_acid NUMERIC(10),
+  food_folate NUMERIC(10),
+  folate_dfe NUMERIC(10),
+  choline_total NUMERIC(),
+  b12 NUMERIC(10, 2),
+  a_iu NUMERIC(10),
+  a_rae NUMERIC(10),
+  retinol NUMERIC(10),
+  alpha_carotene NUMERIC(10),
+  beta_carotene NUMERIC(10),
+  beta_crypt NUMERIC(10),
+  lycopene NUMERIC(10),
+  lutzea NUMERIC(10),
+  e NUMERIC(10, 2),
+  d_mcg NUMERIC(10, 1),
+  d_iu NUMERIC(10),
+  k NUMERIC(10, 1),
+  fa_sat NUMERIC(10, 3),
+  fa_mono NUMERIC(10, 3),
+  fa_poly NUMERIC(10, 3),
+  cholesterol NUMERIC(10, 3),
+  bmwt1 NUMERIC(9, 2),
   gmwt_desc1 VARCHAR(120),
-  gmwt2 NUMBER(9, 2),
+  gmwt2 NUMERIC(9, 2),
   gmwt_desc2 VARCHAR(120),
-  refuse_pct NUMBER(2)
+  refuse_pct NUMERIC(2)
 );
 
-comment on column ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
-comment on column short_desc is '60-character abbreviated description of food item.†';
-comment on column water is 'Water (g/100 g)';
-comment on column energy_kcal is 'Food energy (kcal/100 g)';
-comment on column protein is 'Protein (g/100 g)';
-comment on column lipid_total is 'Total lipid (fat) (g/100 g)';
-comment on column ash is 'Ash (g/100 g)';
-comment on column carbohydrate is 'Carbohydrate, by difference (g/100 g)';
-comment on column fiber_td is 'Total dietary fiber (g/100 g)';
-comment on column sugar_total is 'Total sugars (g/100 g)';
-comment on column calcium is 'Calcium (mg/100 g)';
-comment on column iron is 'Iron (mg/100 g)';
-comment on column magnesium is 'Magnesium (mg/100 g)';
-comment on column phosphorus is 'Phosphorus (mg/100 g)';
-comment on column potassium is 'Potassium (mg/100 g)';
-comment on column sodium is 'Sodium (mg/100 g)';
-comment on column zinc is 'Zinc (mg/100 g)';
-comment on column copper is 'Copper (mg/100 g)';
-comment on column manganese is 'Manganese (mg/100 g)';
-comment on column selenium is 'Selenium (μg/100 g)';
-comment on column vit_c is 'Vitamin C (mg/100 g)';
-comment on column thiamin is 'Thiamin (mg/100 g)';
-comment on column riboflavin is 'Riboflavin (mg/100 g)';
-comment on column niacin is 'Niacin (mg/100 g)';
-comment on column panto_acid is 'Pantothenic acid (mg/100 g)';
-comment on column vit_b6 is 'Vitamin B6 (mg/100 g)';
-comment on column folate_total is 'Folate, total (μg/100 g)';
-comment on column folic_acid is 'Folic acid (μg/100 g)';
-comment on column food_folate is 'Food folate (μg/100 g)';
-comment on column folate_dfe is 'Folate (μg dietary folate equivalents/100 g)';
-comment on column choline_total is 'Choline, total (mg/100 g)';
-comment on column b12 is 'Vitamin B12 (μg/100 g)';
-comment on column a_iu is 'Vitamin A (IU/100 g)';
-comment on column a_rae is 'Vitamin A (μg retinol activity equivalents/100g)';
-comment on column retinol is 'Retinol (μg/100 g)';
-comment on column alpha_carotene is 'Alpha-carotene (μg/100 g)';
-comment on column beta_carotene is 'Beta-carotene (μg/100 g)';
-comment on column beta_crypt is 'Beta-cryptoxanthin (μg/100 g)';
-comment on column lycopene is 'Lycopene (μg/100 g)';
-comment on column lutzea is 'Lutein+zeazanthin (μg/100 g)';
-comment on column e is 'Vitamin E (alpha-tocopherol) (mg/100 g)';
-comment on column d_mcg is 'Vitamin D (μg/100 g)';
-comment on column d_iu is 'Vitamin D (IU/100 g)';
-comment on column k is 'Vitamin K (phylloquinone) (μg/100 g)';
-comment on column fa_sat is 'Saturated fatty acid (g/100 g)';
-comment on column fa_mono is 'Monounsaturated fatty acids (g/100 g)';
-comment on column fa_poly is 'Polyunsaturated fatty acids (g/100 g)';
-comment on column cholesterol is 'Cholesterol (mg/100 g)';
-comment on column bmwt1 is 'First household weight for this item from the Weight file.‡';
-comment on column gmwt_desc1 is 'Description of household weight number 1.';
-comment on column gmwt2 is 'Second household weight for this item from the Weight file.‡';
-comment on column gmwt_desc2 is 'Description of household weight number 2.';
-comment on column refuse_pct is 'Percent refuse.§';
+comment on column abbreviated.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
+comment on column abbreviated.short_desc is '60-character abbreviated description of food item.†';
+comment on column abbreviated.water is 'Water (g/100 g)';
+comment on column abbreviated.energy_kcal is 'Food energy (kcal/100 g)';
+comment on column abbreviated.protein is 'Protein (g/100 g)';
+comment on column abbreviated.lipid_total is 'Total lipid (fat) (g/100 g)';
+comment on column abbreviated.ash is 'Ash (g/100 g)';
+comment on column abbreviated.carbohydrate is 'Carbohydrate, by difference (g/100 g)';
+comment on column abbreviated.fiber_td is 'Total dietary fiber (g/100 g)';
+comment on column abbreviated.sugar_total is 'Total sugars (g/100 g)';
+comment on column abbreviated.calcium is 'Calcium (mg/100 g)';
+comment on column abbreviated.iron is 'Iron (mg/100 g)';
+comment on column abbreviated.magnesium is 'Magnesium (mg/100 g)';
+comment on column abbreviated.phosphorus is 'Phosphorus (mg/100 g)';
+comment on column abbreviated.potassium is 'Potassium (mg/100 g)';
+comment on column abbreviated.sodium is 'Sodium (mg/100 g)';
+comment on column abbreviated.zinc is 'Zinc (mg/100 g)';
+comment on column abbreviated.copper is 'Copper (mg/100 g)';
+comment on column abbreviated.manganese is 'Manganese (mg/100 g)';
+comment on column abbreviated.selenium is 'Selenium (μg/100 g)';
+comment on column abbreviated.vit_c is 'Vitamin C (mg/100 g)';
+comment on column abbreviated.thiamin is 'Thiamin (mg/100 g)';
+comment on column abbreviated.riboflavin is 'Riboflavin (mg/100 g)';
+comment on column abbreviated.niacin is 'Niacin (mg/100 g)';
+comment on column abbreviated.panto_acid is 'Pantothenic acid (mg/100 g)';
+comment on column abbreviated.vit_b6 is 'Vitamin B6 (mg/100 g)';
+comment on column abbreviated.folate_total is 'Folate, total (μg/100 g)';
+comment on column abbreviated.folic_acid is 'Folic acid (μg/100 g)';
+comment on column abbreviated.food_folate is 'Food folate (μg/100 g)';
+comment on column abbreviated.folate_dfe is 'Folate (μg dietary folate equivalents/100 g)';
+comment on column abbreviated.choline_total is 'Choline, total (mg/100 g)';
+comment on column abbreviated.b12 is 'Vitamin B12 (μg/100 g)';
+comment on column abbreviated.a_iu is 'Vitamin A (IU/100 g)';
+comment on column abbreviated.a_rae is 'Vitamin A (μg retinol activity equivalents/100g)';
+comment on column abbreviated.retinol is 'Retinol (μg/100 g)';
+comment on column abbreviated.alpha_carotene is 'Alpha-carotene (μg/100 g)';
+comment on column abbreviated.beta_carotene is 'Beta-carotene (μg/100 g)';
+comment on column abbreviated.beta_crypt is 'Beta-cryptoxanthin (μg/100 g)';
+comment on column abbreviated.lycopene is 'Lycopene (μg/100 g)';
+comment on column abbreviated.lutzea is 'Lutein+zeazanthin (μg/100 g)';
+comment on column abbreviated.e is 'Vitamin E (alpha-tocopherol) (mg/100 g)';
+comment on column abbreviated.d_mcg is 'Vitamin D (μg/100 g)';
+comment on column abbreviated.d_iu is 'Vitamin D (IU/100 g)';
+comment on column abbreviated.k is 'Vitamin K (phylloquinone) (μg/100 g)';
+comment on column abbreviated.fa_sat is 'Saturated fatty acid (g/100 g)';
+comment on column abbreviated.fa_mono is 'Monounsaturated fatty acids (g/100 g)';
+comment on column abbreviated.fa_poly is 'Polyunsaturated fatty acids (g/100 g)';
+comment on column abbreviated.cholesterol is 'Cholesterol (mg/100 g)';
+comment on column abbreviated.bmwt1 is 'First household weight for this item from the Weight file.‡';
+comment on column abbreviated.gmwt_desc1 is 'Description of household weight number 1.';
+comment on column abbreviated.gmwt2 is 'Second household weight for this item from the Weight file.‡';
+comment on column abbreviated.gmwt_desc2 is 'Description of household weight number 2.';
+comment on column abbreviated.refuse_pct is 'Percent refuse.§';
 
-comment on table abbreviated is 'Contains all the food items found in the relational database, but contains the information in one record per food item.';
+comment on table aabbreviated.bbreviated is 'Contains all the food items found in the relational database, but contains the information in one record per food item.';

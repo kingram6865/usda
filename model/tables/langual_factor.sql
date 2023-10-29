@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS langual_factor (
   factor_code     VARCHAR(5)
 );
 
-comment on column ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
-comment on column factor_code is 'The LanguaL factor from the Thesaurus.';
+comment on column langual_factor.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
+comment on column langual_factor.factor_code is 'The LanguaL factor from the Thesaurus.';
 
 comment on table langual_factor is 'A support file to food_description table and contains the factors from the LanguaL Thesaurus used to code a particular food.';

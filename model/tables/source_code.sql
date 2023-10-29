@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS source_code (
   srccd_desc    VARCHAR(60)
 );
 
-comment on column src_cd is 'A 2-digit code indicating type of data.';
-comment on column srccd_desc is 'Description of source code that identifies the type of nutrient data.';
+comment on column source_code.src_cd is 'A 2-digit code indicating type of data.';
+comment on column source_code.srccd_desc is 'Description of source code that identifies the type of nutrient data.';
 
 comment on table source_code is 'Contains codes indicating the type of data (analytical, calculated, assumed zero, and so on) in nutrient_data.';

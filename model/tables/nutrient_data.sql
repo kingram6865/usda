@@ -39,43 +39,43 @@ CC              A1        Y    Confidence Code indicating data quality, based on
 CREATE TABLE IF NOT EXISTS nutrient_data (
   ndb_no VARCHAR(5),
   nutr_no VARCHAR(3),
-  nutr_val NUMBER(10,3),
-  num_data_pts NUMBER(5,0),
-  std_error NUMBER(8,3),
+  nutr_val NUMERIC(10,3),
+  num_data_pts NUMERIC(5,0),
+  std_error NUMERIC(8,3),
   src_cd VARCHAR(2),
   deriv_cd VARCHAR(4),
   ref_ndb_no VARCHAR(5),
   add_nutr_mark VARCHAR(1),
-  num_studies NUMBER(2),
-  min NUMBER(10,3),
-  max NUMBER(10,3),
-  df NUMBER(4),
-  low_eb NUMBER(10,3),
-  up_eb NUMBER(10,3),
+  num_studies NUMERIC(2),
+  min NUMERIC(10,3),
+  max NUMERIC(10,3),
+  df NUMERIC(4),
+  low_eb NUMERIC(10,3),
+  up_eb NUMERIC(10,3),
   stat_cmt VARCHAR(10),
   addmod_date VARCHAR(10),
   cc VARCHAR(1)
 );
 
 
-comment on column ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
-comment on column nutr_no is 'Unique 3-digit identifier code for a nutrient.';
-comment on column nutr_val is 'Amount in 100 grams, edible portion †.';
-comment on column num_data_pts is 'Number of data points is the number of analyses used to calculate the nutrient value. If the number of data points is 0, the value was calculated or imputed.';
-comment on column std_error is 'Standard error of the mean. Null if cannot be calculated. The standard error is also not given if the number of data points is less than three.';
-comment on column src_cd is 'Code indicating type of data.';
-comment on column deriv_cd is 'Data  Derivation Code  giving specific information on how the value is determined. This field is populated only for items added or updated starting with SR14. This field may not be populated if older records were used in the calculation of the mean value.';
-comment on column ref_ndb_no is 'NDB number of the item used to calculate a missing value. Populated only for items added or updated starting with SR14.';
-comment on column add_nutr_mark is 'Indicates a vitamin or mineral added for fortification or enrichment. This field is populated for ready-to-eat breakfast cereals and many brand-name hot cereals in food group 08.';
-comment on column num_studies is 'Number of studies.';
-comment on column min is 'Minimum value.';
-comment on column max is 'Maximum value.';
-comment on column df is 'Degrees of freedom.';
-comment on column low_eb is 'Lower 95% error bound.';
-comment on column up_eb is 'Upper 95% error bound.';
-comment on column stat_cmt is 'Statistical comments. See definitions below.';
-comment on column addmod_date is 'Indicates when a value was either added to the database or last modified.';
-comment on column cc is 'Confidence Code indicating data quality, based on evaluation of sample plan, sample handling, analytical method, analytical quality control, and number of samples analyzed. Not included in this release, but is planned for future releases.';
+comment on column nutrient_data.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
+comment on column nutrient_data.nutr_no is 'Unique 3-digit identifier code for a nutrient.';
+comment on column nutrient_data.nutr_val is 'Amount in 100 grams, edible portion †.';
+comment on column nutrient_data.num_data_pts is 'Number of data points is the number of analyses used to calculate the nutrient value. If the number of data points is 0, the value was calculated or imputed.';
+comment on column nutrient_data.std_error is 'Standard error of the mean. Null if cannot be calculated. The standard error is also not given if the number of data points is less than three.';
+comment on column nutrient_data.src_cd is 'Code indicating type of data.';
+comment on column nutrient_data.deriv_cd is 'Data  Derivation Code  giving specific information on how the value is determined. This field is populated only for items added or updated starting with SR14. This field may not be populated if older records were used in the calculation of the mean value.';
+comment on column nutrient_data.ref_ndb_no is 'NDB number of the item used to calculate a missing value. Populated only for items added or updated starting with SR14.';
+comment on column nutrient_data.add_nutr_mark is 'Indicates a vitamin or mineral added for fortification or enrichment. This field is populated for ready-to-eat breakfast cereals and many brand-name hot cereals in food group 08.';
+comment on column nutrient_data.num_studies is 'Number of studies.';
+comment on column nutrient_data.min is 'Minimum value.';
+comment on column nutrient_data.max is 'Maximum value.';
+comment on column nutrient_data.df is 'Degrees of freedom.';
+comment on column nutrient_data.low_eb is 'Lower 95% error bound.';
+comment on column nutrient_data.up_eb is 'Upper 95% error bound.';
+comment on column nutrient_data.stat_cmt is 'Statistical comments. See definitions below.';
+comment on column nutrient_data.addmod_date is 'Indicates when a value was either added to the database or last modified.';
+comment on column nutrient_data.cc is 'Confidence Code indicating data quality, based on evaluation of sample plan, sample handling, analytical method, analytical quality control, and number of samples analyzed. Not included in this release, but is planned for future releases.';
 
 comment on table nutrient_data is 'Contains the nutrient values and information about the values, including expanded statistical information.';
 
