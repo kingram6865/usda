@@ -1,12 +1,41 @@
 # Dev Notes
-The best way to import CSV files is to use the `pgcsv` utility.
+The best way to import CSV files is to use the [pgcsv](https://github.com/pudo/pgcsv) utility.
 
 Template
+```bash
 pgcsv --db 'postgresql://{server}/db?user={user}&password={pw}' {table name} sample.csv
+```
 
 E.g.
 
+```bash
 pgcsv --db 'postgresql://localhost/textbooks?user=exampleuser&password=12345' books booklist.csv
+```
+
+# Data source
+
+https://data.nal.usda.gov/search/field_resources%253Afield_format/zip-237/type/dataset?query=np107
+
+Dataset: Composition of Foods Raw, Processed, Prepared USDA National Nutrient Database for Standard Reference
+Last release number (2023) - Release 28
+Archive File: sr28asc.zip [CSV - ASCII files delimited with commas and quotes]
+
+Files:
+
+sr28_doc.pdf - READ ME - Documentation and User Guide - Composition of Foods Raw, Processed, Prepared - 
+                        USDA National Nutrient Database for Standard Reference, Release 28
+DATA_SRC.txt - (Sources of Data) 
+DATSRCLN.txt - (Sources of Data Link) relationship between the Sources of Data file and the Nutrient Data file.
+DERIV_CD.txt - (Data Derivation Code Description)
+FD_GROUP.txt - (Food Group Description)
+FOOD_DES.txt - (Food Description)
+FOOTNOTE.txt - (Footnote)
+LANGDESC.txt - (LanguaL Factors Description)
+LANGUAL.txt  - (LanguaL Factor) 
+NUT_DATA.txt - (Nutrient Data)
+NUTR_DEF.txt - (Nutrient Definition)
+SRC_CD.txt   - (Source Code)
+WEIGHT.txt   - (Gram Weight) contains the gram weights and measure descriptions for each food item
 
 ## Tables
 
