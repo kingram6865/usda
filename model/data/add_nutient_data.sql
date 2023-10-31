@@ -1,3 +1,8 @@
+/*
+  Updates nutrient_definition with a notes column and then adds information about each individual amino acid.
+  Notes is not a general column in the USDA data, and in general additional information about nutrients is not part of the dataset.
+*/
+
 ALTER TABLE nutrient_definition ADD COLUMN TEXT notes;
 
 UPDATE nutrient 
