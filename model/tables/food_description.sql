@@ -24,8 +24,6 @@ Food Description File Format
   Pro_Factor    N 4.2      Y     Factor for calculating calories from protein (see p. 14).
   Fat_Factor    N 4.2      Y     Factor for calculating calories from fat (see p. 14).
   CHO_Factor    N 4.2      Y     Factor for calculating calories from carbohydrate (see p. 14).
-  FdGrp_Cd      A 4*       N     4-digit code identifying a food group. Only the first 2 digits are currently assigned. In the future, the last 2 digits may be used. Codes may not be consecutive.
-  FdGrp_Desc    A 60       N     Name of food group.
 */
 
 CREATE TABLE IF NOT EXISTS food_description (
@@ -43,8 +41,6 @@ CREATE TABLE IF NOT EXISTS food_description (
   pro_factor NUMERIC(4,2),
   fat_factor NUMERIC(4,2),
   cho_factor NUMERIC(4,2),
-  fdgrp_code VARCHAR(4),
-  foodgroup_desc VARCHAR(60)
 );
 
 comment on column food_description.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
@@ -61,8 +57,6 @@ comment on column food_description.n_factor is 'Factor for converting nitrogen t
 comment on column food_description.pro_factor is 'Factor for calculating calories from protein (see p. 14).';
 comment on column food_description.fat_factor is 'Factor for calculating calories from fat (see p. 14).';
 comment on column food_description.cho_factor is 'Factor for calculating calories from carbohydrate (see p. 14).';
-comment on column food_description.fdgrp_code is '4-digit code identifying a food group. Only the first 2 digits are currently assigned. In the future, the last 2 digits may be used. Codes may not be consecutive.';
-comment on column food_description.foodgroup_desc is 'Name of food group.';
 
 comment on table food_description is 'Contains long and short descriptions and food group designators for all food items, along with common names, manufacturer name, scientific name, percentage and description of refuse, and factors used for calculating protein and kilocalories, if applicable. Items used in the FNDDS are also identified by value of “Y” in the Survey field.';
 
