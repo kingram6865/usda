@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS abbreviated (
   energy_kcal NUMERIC(11),
   protein NUMERIC(11, 2),
   lipid_total NUMERIC(11, 2),
-  ash NUMERIC\(11, 2),
+  ash NUMERIC(11, 2),
   carbohydrate NUMERIC(11, 2),
   fiber_td NUMERIC(11, 1),
   sugar_total NUMERIC(11, 2),

@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS food_description (
   n_factor NUMERIC(5,2),
   pro_factor NUMERIC(5,2),
   fat_factor NUMERIC(5,2),
-  cho_factor NUMERIC(5,2),
+  cho_factor NUMERIC(5,2)
 );
 
 comment on column food_description.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
