@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS nutrient_definition (
   tagname VARCHAR(20),
   nutrdesc VARCHAR(60),
   num_dec VARCHAR(1),
-  sr_order NUMERIC(6)
+  sr_order NUMERIC(7)
 );
 
 comment on column nutrient_definition.nutr_no is 'Unique 3-digit identifier code for a nutrient.';

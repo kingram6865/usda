@@ -20,11 +20,11 @@ Std_Dev            N 7.3      Y     Standard deviation.
 CREATE TABLE IF NOT EXISTS weight (
   ndb_no VARCHAR(5),
   seq VARCHAR(2),
-  amount NUMERIC(5,3),
+  amount NUMERIC(6,3),
   measure VARCHAR(84),
-  gm_wgt NUMERIC(7,1),
-  num_data_pts NUMERIC(3),
-  std_dev NUMERIC(7,3)
+  gm_wgt NUMERIC(8,1),
+  num_data_pts NUMERIC(4),
+  std_dev NUMERIC(8,3)
 );
 
 comment on column weight.ndb_no is '5-digit Nutrient Databank number that uniquely identifies a food item. If this field is defined as numeric, the leading zero will be lost.';
