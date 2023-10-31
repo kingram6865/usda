@@ -1,0 +1,15 @@
+#!/bin/bash
+
+psql food < ./abbreviated.sql
+psql food < ./data_sources_link.sql
+psql food < ./data_sources.sql
+psql food < ./dd_code_desc.sql
+psql food < ./food_description.sql
+psql food < ./food_group_description.sql
+psql food < ./footnotes.sql
+psql food < ./langual_factor_description.sql
+psql food < ./langual_factor.sql
+psql food < ./nutrient_data.sql
+psql food < ./nutrient_definition.sql
+psql food < ./source_code.sql
+psql food < ./weight.sql

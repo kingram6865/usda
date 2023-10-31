@@ -1,0 +1,13 @@
+DROP TABLE abbreviated;
+DROP TABLE data_sources;
+DROP TABLE data_sources_link;
+DROP TABLE dd_code_desc;
+DROP TABLE food_description;
+DROP TABLE food_group_description;
+DROP TABLE footnotes;
+DROP TABLE langual_factor;
+DROP TABLE langual_factor_description;
+DROP TABLE nutrient_data;
+DROP TABLE nutrient_definition;
+DROP TABLE source_code;
+DROP TABLE weight;
