@@ -12,6 +12,11 @@ DBHOST=
 DBPORT=
 DB=
 ```
+Postgres connect string as JavaScript interpolated string:
+```js
+postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${process.env.DBPORT}/${process.env.DB}
+```
+
 ## Backend - API
 
   The backend is a REST API using JavaScript and Express to develop the endpoints.
