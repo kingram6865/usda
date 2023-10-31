@@ -1,4 +1,6 @@
 #!/bin/bash
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+pushd "$parent_path"
 
 psql food < abbreviated.sql
 psql food < data_sources_link.sql
@@ -13,3 +15,5 @@ psql food < nutrient_data.sql
 psql food < nutrient_definition.sql
 psql food < source_code.sql
 psql food < weight.sql
+
+popd
