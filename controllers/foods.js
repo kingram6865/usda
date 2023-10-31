@@ -1,8 +1,21 @@
 const { db } = require('../db/connection')
 
+async function executeSql(sql) {
+  let result
+  
+  try {
+    result = await db.any(sql)
+  } catch (err) {
+    console.log(err)
+  } finally {
+    return result
+  }
+}
+
+
 async function sampleFood (req, res) {  
   try {
-    SQL=`SELECT * FROM food WHERE fdc_id = '1111496'`
+    SQL=`SELECT * FROM food_description WHERE  ndb_no = '01047'`
     const rows = await db.any(SQL)
     console.log(rows)
     res.json(rows)
@@ -23,7 +36,7 @@ async function getAllAminos (req, res) {
   console.log(startIndex, endIndex)
 
   try {
-    SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos} order by name`
+    SQL=`SELECT * FROM nutrient_definition WHERE lower(nutrdesc) IN ${aminos} ORDER BY nutrdesc`
     const rows = await db.any(SQL)
 
     const data = {
@@ -56,7 +69,7 @@ async function getAllEssentialAminos (req, res) {
   const aminos = "('histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'threonine', 'tryptophan', 'valine')"
 
   try {
-    SQL=`SELECT * FROM nutrient WHERE lower(name) IN ${aminos} order by name`
+    SQL=`SELECT * FROM nutrient_definition WHERE lower(nutrdesc) IN ${aminos} ORDER BY nutrdesc`
     const rows = await db.any(SQL)
 
     const data = {
@@ -78,7 +91,7 @@ async function getAllEssentialAminos (req, res) {
 
 async function foodCategories (req, res) {  
   try {
-    SQL=`SELECT * FROM food_category`
+    SQL=`SELECT fdgrp_cd AS "group code", fdgrp_desc AS description FROM food_group_description`
     const rows = await db.any(SQL)
     console.log(rows)
     res.json(rows)
@@ -89,7 +102,7 @@ async function foodCategories (req, res) {
 
 async function getFoodByCategory (req, res) {  
   try {
-    SQL=`SELECT * FROM food WHERE `
+    SQL=`select count(*) from food_description WHERE foodgroup_code IN (SELECT fdgrp_cd FROM food_group_description WHERE fdgrp_desc ILIKE '%${req.param.term}%')`
     const rows = await db.any(SQL)
     console.log(rows)
     res.json(rows)
@@ -125,9 +138,9 @@ const getFoodByTerm = async (req, res) => {
 const getNutritionForFoodById = async (req, res) => {
   let rows, food
   try {
-    // const SQL = `select food_nutrient.id, food_nutrient.fdc_id, food_nutrient.nutrient_id, nutrient.name, food_nutrient.amount, nutrient.unit_name from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient.fdc_id = ${req.params.id}`
-    const SQL = `select food_nutrient.*, nutrient.* from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient.fdc_id = ${req.params.id} AND food_nutrient.amount > 0`
-    const SQL2 = `SELECT * FROM food WHERE fdc_id = ${req.params.id}`
+    // const SQL = `select food_nutrient.id, food_nutrient. ndb_no, food_nutrient.nutrient_id, nutrient.name, food_nutrient.amount, nutrient.unit_name from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient. ndb_no = ${req.params.id}`
+    const SQL = `select food_nutrient.*, nutrient.* from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient. ndb_no = ${req.params.id} AND food_nutrient.amount > 0`
+    const SQL2 = `SELECT * FROM food WHERE  ndb_no = ${req.params.id}`
     rows = await db.any(SQL)
     food = await db.any(SQL2)
     console.log(rows)
@@ -142,7 +155,7 @@ const getNutritionForFoodById = async (req, res) => {
 const getFoodById = async (req, res) => {
   let rows
   try {
-    SQL=`SELECT * FROM food WHERE fdc_id = '${req.params.id}'`
+    SQL=`SELECT * FROM food WHERE  ndb_no = '${req.params.id}'`
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
@@ -191,7 +204,7 @@ const getAllNutrients = async (req, res) => {
 const getNutrientByTerm = async (req, res) => {
   let rows
   try {
-    SQL=`SELECT * FROM nutrient WHERE name LIKE '%${req.params.id}%'`
+    SQL=`SELECT * FROM nutrient_data WHERE nutrdesc LIKE '%${req.params.term}%'`
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
@@ -202,7 +215,7 @@ const getNutrientByTerm = async (req, res) => {
 const getNutrientById = async (req, res) => {
   let rows = {result: 'In progress'}
   try {
-    SQL=`SELECT * from nutrient WHERE id = ${req.params.id}`
+    SQL=`SELECT * from nutrient_definition WHERE nutr_no = ${req.params.id}`
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
@@ -221,29 +234,29 @@ const getFoodData = async (req, res) => {
     let output = []
 
     let firstItem = {
-      fdc_id: final.fdc_id,
-      description: final.description,
-      food_category_id: final.food_category_id,
+      ndb_no: final.ndb_no,
+      description: final.long_desc,
+      food_category_id: foodgroup_code,
       nutrients: [
         {
-          foodId: final.fdc_id, 
-          nutrientId: final.nutrient_id,
-          nutrientName: final.name,
-          amount: final.amount,
-          units: final.unit_name
+          foodId: final.ndb_no, 
+          nutrientId: final.nutr_no,
+          nutrientName: final.nutrdesc,
+          amount: final.nutr_val,
+          units: final.units
         },
       ]    
     }
     
-    let intermediate = (Array.isArray(final)) ? final.find(x => x.fdc_id === current.fdc_id) : firstItem
+    let intermediate = (Array.isArray(final)) ? final.find(x => x.nutr_no === current.nutr_no) : firstItem
 
       if (intermediate) {
         intermediate.nutrients.push({
-          foodId: current.fdc_id, 
-          nutrientId: current.nutrient_id,
-          nutrientName: current.name,
-          amount: current.amount,
-          units: current.unit_name
+          foodId: current.ndb_no, 
+          nutrientId: current.nutr_no,
+          nutrientName: current.nutrdesc,
+          amount: current.nutr_val,
+          units: current.units
         })
     
         if (Array.isArray(final)) {
@@ -254,16 +267,16 @@ const getFoodData = async (req, res) => {
       } else {    
         output = (Array.isArray(final)) ? [...final] : Array()
         output.push({
-          fdc_id: current.fdc_id,
-          description: current.description,
-          food_category_id: current.food_category_id,
+          ndb_no: current. ndb_no,
+          description: current.long_desc,
+          food_category_id: current.foodgroup_code,
           nutrients: [
             {
-              foodId: current.fdc_id, 
-              nutrientId: current.nutrient_id,
-              nutrientName: current.name,
-              amount: current.amount,
-              units: current.unit_name
+              foodId: current. ndb_no, 
+              nutrientId: current.nutr_no,
+              nutrientName: current.nutrdesc,
+              amount: current.nutr_val,
+              units: current.units
             }
           ]
         })
@@ -273,26 +286,26 @@ const getFoodData = async (req, res) => {
 
   try {
     SQL=`  SELECT 
-    a.fdc_id, 
-    a.description, 
-    a.food_category_id, 
-    b.nutrient_id, 
-    c.name,
-    b.amount,
-    c.unit_name
-  FROM food a 
-  LEFT JOIN food_nutrient b on a.fdc_id = b.fdc_id 
-  LEFT JOIN nutrient c on b.nutrient_id = c.id
+    a.ndb_no, 
+    a.long_desc, 
+    a.foodgroup_code,
+    b.nutr_no, 
+    c.nutrdesc,
+    b.nutr_val,
+    c.units
+  FROM food_description a 
+  LEFT JOIN nutrient_data b on a.ndb_no = b.ndb_no 
+  LEFT JOIN nutrient_definition c on b.nutr_no = c.nutr_no
   WHERE 
-    LOWER(description) LIKE '%${req.params.term}%' 
+    LOWER(a.long_desc) LIKE '%${req.params.term}%' 
   AND 
-    food_category_id IS NOT NULL 
-  ORDER by a.fdc_id`
+    a.foodgroup_code IS NOT NULL 
+  ORDER by a.ndb_no`
 
     rows = await db.any(SQL)
     let results = rows.reduce(aggregate)
     // results.unshift({"itemsRetrieved": results.length})    
-    results.forEach(element => console.log('\x1b[36m', element.fdc_id, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
+    results.forEach(element => console.log('\x1b[36m', element.ndb_no, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
 
     let data = {
       "Total Results": results.length,
@@ -355,5 +368,6 @@ module.exports = {
   foodCategoriesById,
   getNutritionForFoodById,
   getAllAminos,
-  getAllEssentialAminos
+  getAllEssentialAminos,
+  getFoodByCategory
 }
