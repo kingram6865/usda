@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS food_description (
   mfg_name VARCHAR(65),
   survey VARCHAR(1),
   ref_desc VARCHAR(135),
-  pefuse NUMERIC(1),
+  refuse NUMERIC(2),
   sciname VARCHAR(65),
   n_factor NUMERIC(5,2),
   pro_factor NUMERIC(5,2),
@@ -51,7 +51,7 @@ comment on column food_description.common_name is 'Other names commonly used to 
 comment on column food_description.mfg_name is 'Indicates the company that manufactured the product, when appropriate.';
 comment on column food_description.survey is 'Indicates if the food item is used in the USDA Food and Nutrient Database for Dietary Studies (FNDDS) and thus has a complete nutrient profile for the 65 FNDDS nutrients.';
 comment on column food_description.ref_desc is 'Description of inedible parts of a food item (refuse), such as seeds or bone.';
-comment on column food_description.pefuse is 'Percentage of refuse.';
+comment on column food_description.refuse is 'Percentage of refuse.';
 comment on column food_description.sciname is 'Scientific name of the food item. Given for the least processed form of the food (usually raw), if applicable.';
 comment on column food_description.n_factor is 'Factor for converting nitrogen to protein (see p. 12).';
 comment on column food_description.pro_factor is 'Factor for calculating calories from protein (see p. 14).';
