@@ -1,18 +1,13 @@
 # Dev Notes
-The best way to import CSV files is to use the [pgcsv](https://github.com/pudo/pgcsv) utility.
 
-Template
-```bash
-pgcsv --db 'postgresql://{server}/db?user={user}&password={pw}' {table name} sample.csv
-```
 
-E.g.
 
-```bash
-pgcsv --db 'postgresql://localhost/textbooks?user=exampleuser&password=12345' books booklist.csv
-```
 
-# Data source
+
+
+
+
+## Data source
 
 https://data.nal.usda.gov/search/field_resources%253Afield_format/zip-237/type/dataset?query=np107
 
@@ -36,6 +31,33 @@ NUT_DATA.txt - (Nutrient Data)
 NUTR_DEF.txt - (Nutrient Definition)
 SRC_CD.txt   - (Source Code)
 WEIGHT.txt   - (Gram Weight) contains the gram weights and measure descriptions for each food item
+
+### Import data
+
+#### pgcsv utility
+One way to import CSV files is to use the [pgcsv](https://github.com/pudo/pgcsv) utility.
+
+Template
+```bash
+pgcsv --db 'postgresql://{server}/db?user={user}&password={pw}' {table name} sample.csv
+```
+
+E.g.
+
+```bash
+pgcsv --db 'postgresql://localhost/textbooks?user=exampleuser&password=12345' books booklist.csv
+```
+
+#### PostgreSQL COPY command
+
+```SQL
+COPY `table_name` (column list of data to import)
+FROM 'FILE' /* this should be the full OS path to the file.*/
+CSV
+DELIMITER '^' /* The USDA data has specific delimiters and quote markers*/
+QUOTE '~'
+ENCODING 'SQL_ASCII' /* The character encoding is non-ISO extended ASCII (at least for v28) */
+```
 
 ## Tables
 
