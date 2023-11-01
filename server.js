@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3019
 const SERVER = process.env.HOST || localhost
 const TIME = new Date()
 // const SERVER = process.env.HOST || localhost
-console.log(`API Server:  ${process.env.HOST}:${process.env.PORT} on ${TIME}`)
+// console.log(`API Server:  ${process.env.HOST}:${process.env.PORT} on ${TIME}`)
 
 const app = express()
 app.use(cors())
