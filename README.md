@@ -4,15 +4,18 @@ This project is the prototype for a full stack app which uses information from t
 
 ## Setup
 
-Create a `.env` file with Postgres database parameters:
+Create a `.env` file with Postgres database parameters and HOST parameter for server:
 ```
-DBUSER=
-DBPW=
-DBHOST=
-DBPORT=
-DB=
+HOST=<FDQN or IP>
+DBUSER=<postgres user>
+DBPW=<postgres user password>
+DBHOST=<postgres server>
+DBPORT=<postgres port>
+DB=<postgres database>
 ```
+
 Postgres connect string as JavaScript interpolated string:
+
 ```js
 postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${process.env.DBPORT}/${process.env.DB}
 ```

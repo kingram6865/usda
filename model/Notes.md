@@ -12,25 +12,27 @@
 https://data.nal.usda.gov/search/field_resources%253Afield_format/zip-237/type/dataset?query=np107
 
 Dataset: Composition of Foods Raw, Processed, Prepared USDA National Nutrient Database for Standard Reference
+
 Last release number (2023) - Release 28
+
 Archive File: sr28asc.zip [CSV - ASCII files delimited with commas and quotes]
 
 Files:
 
-sr28_doc.pdf - READ ME - Documentation and User Guide - Composition of Foods Raw, Processed, Prepared - 
-                        USDA National Nutrient Database for Standard Reference, Release 28
-DATA_SRC.txt - (Sources of Data) 
-DATSRCLN.txt - (Sources of Data Link) relationship between the Sources of Data file and the Nutrient Data file.
-DERIV_CD.txt - (Data Derivation Code Description)
-FD_GROUP.txt - (Food Group Description)
-FOOD_DES.txt - (Food Description)
-FOOTNOTE.txt - (Footnote)
-LANGDESC.txt - (LanguaL Factors Description)
-LANGUAL.txt  - (LanguaL Factor) 
-NUT_DATA.txt - (Nutrient Data)
-NUTR_DEF.txt - (Nutrient Definition)
-SRC_CD.txt   - (Source Code)
-WEIGHT.txt   - (Gram Weight) contains the gram weights and measure descriptions for each food item
+- sr28_doc.pdf - READ ME - Documentation and User Guide - Composition of Foods Raw, 
+- Processed, Prepared - USDA National Nutrient Database for Standard Reference, Release 28
+- DATA_SRC.txt - (Sources of Data) 
+- DATSRCLN.txt - (Sources of Data Link) relationship between the Sources of Data file and the Nutrient Data file.
+- DERIV_CD.txt - (Data Derivation Code Description)
+- FD_GROUP.txt - (Food Group Description)
+- FOOD_DES.txt - (Food Description)
+- FOOTNOTE.txt - (Footnote)
+- LANGDESC.txt - (LanguaL Factors Description)
+- LANGUAL.txt  - (LanguaL Factor) 
+- NUT_DATA.txt - (Nutrient Data)
+- NUTR_DEF.txt - (Nutrient Definition)
+- SRC_CD.txt   - (Source Code)
+- WEIGHT.txt   - (Gram Weight) contains the gram weights and measure descriptions for each food item
 
 ### Import data
 
@@ -59,21 +61,74 @@ QUOTE '~'
 ENCODING 'SQL_ASCII' /* The character encoding is non-ISO extended ASCII (at least for v28) */
 ```
 
-## Tables
+## Create Database
+
+```sql
+CREATE DATABASE food
+```
+
+## Create DATABASE user
+
+```sql
+CREATE USER usda WITH ENCRYPTED PASSWORD 'usda';
+GRANT CONNECT ON DATABASE food to usda;
+ALTER DATABASE food OWNER TO usda;
+```
+
+## Connect as Database owner
+
+```bash
+psql food -U usda -W
+```
+
+OR
+
+```sql
+\c food usda
+```
+
+## Create SCHEMA
+
+```sql
+CREATE SCHEMA nutrition;
+```
+
+## Set default SCHEMA
+
+```sql
+ALTER DATABASE food SET search_path TO nutrition;
+ALTER USER usda SET search_path TO nutrition;
+```
+
+## Create tables
+
+From shell execute script:
+```bash
+model/tables/create_tables
+```
+
+## Import data into tables
+
+From shell execute script:
+```bash
+model/data/import_all_data
+```
+
+# Tables
 
 ### Table: food
 Food has 9 distinct data types:
-```
-agricultural_acquisition
-branded_food
-experimental_food
-foundation_food
-market_acquistion
-sample_food
-sr_legacy_food
-sub_sample_food
-survey_fndds_food
-```
+
+- agricultural_acquisition
+- branded_food
+- experimental_food
+- foundation_food
+- market_acquistion
+- sample_food
+- sr_legacy_food
+- sub_sample_food
+- survey_fndds_food
+
 
 
 |  Column      |  Type   | Collation | Nullable | 
