@@ -126,7 +126,7 @@ const getFoodByTerm = async (req, res) => {
   let rows
   try {
     // const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE '%${req.params.term}%' and data_type NOT LIKE 'branded_food'`
-    const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE lower('%${req.params.term.replace(/\s+/g,'\%')}%')`
+    const SQL = `SELECT * FROM food_description WHERE LOWER(long_desc) LIKE lower('%${req.params.term.replace(/\s+/g,'\%')}%')`
     rows = await db.any(SQL)
     rows = [{"totalRecords": rows.length}, ...rows]
     res.json(rows)
@@ -140,7 +140,7 @@ const getNutritionForFoodById = async (req, res) => {
   try {
     // const SQL = `select food_nutrient.id, food_nutrient. ndb_no, food_nutrient.nutrient_id, nutrient.name, food_nutrient.amount, nutrient.unit_name from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient. ndb_no = ${req.params.id}`
     const SQL = `select food_nutrient.*, nutrient.* from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient. ndb_no = ${req.params.id} AND food_nutrient.amount > 0`
-    const SQL2 = `SELECT * FROM food WHERE  ndb_no = ${req.params.id}`
+    const SQL2 = `SELECT * FROM food_description WHERE  ndb_no = ${req.params.id}`
     rows = await db.any(SQL)
     food = await db.any(SQL2)
     console.log(rows)
@@ -155,7 +155,7 @@ const getNutritionForFoodById = async (req, res) => {
 const getFoodById = async (req, res) => {
   let rows
   try {
-    SQL=`SELECT * FROM food WHERE  ndb_no = '${req.params.id}'`
+    SQL=`SELECT * FROM food_description WHERE  ndb_no = '${req.params.id}'`
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
@@ -173,7 +173,7 @@ const getAllNutrients = async (req, res) => {
   // console.log(`${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}`)
 
   try {
-    SQL=`SELECT * FROM nutrient`
+    SQL=`SELECT * FROM nutrient_definition`
     rows = await db.any(SQL)
 
     const data = {
@@ -201,7 +201,7 @@ const getAllNutrients = async (req, res) => {
   }
 }
 
-const getNutrientByTerm = async (req, res) => {
+const getNutrientByName = async (req, res) => {
   let rows
   try {
     SQL=`SELECT * FROM nutrient_data WHERE nutrdesc LIKE '%${req.params.term}%'`
@@ -361,7 +361,7 @@ module.exports = {
   getFoodByTerm,
   getFoodById,
   getAllNutrients,
-  getNutrientByTerm,
+  getNutrientByName,
   getNutrientById,
   getFoodData,
   foodCategories,
