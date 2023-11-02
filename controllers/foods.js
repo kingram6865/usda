@@ -90,10 +90,12 @@ async function getAllEssentialAminos (req, res) {
 }
 
 async function foodCategories (req, res) {  
+  let output
   try {
     SQL=`SELECT fdgrp_cd AS "group code", fdgrp_desc AS description FROM food_group_description`
     const rows = await db.any(SQL)
-    console.log(rows)
+    // console.log(rows)
+    output = {categories: rows[0]}
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -116,7 +118,7 @@ async function foodCategoriesById (req, res) {
   try {
     SQL=`SELECT * FROM food_description WHERE foodgroup_code = '${req.params.id}'`
     const rows = await db.any(SQL)
-    // console.log(rows)
+    console.log(rows)
     output = {categories: rows[0]}
     res.json(rows)
   } catch (error) {
