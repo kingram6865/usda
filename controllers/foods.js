@@ -144,7 +144,7 @@ const getNutritionForFoodById = async (req, res) => {
     const SQL2 = `SELECT * FROM food_description WHERE ndb_no = '${req.params.id}'`
     rows = await db.any(SQL)
     food = await db.any(SQL2)
-    console.log(rows)
+    
     rows = [{"#ofNutrients": rows.length}, ...food, ...rows]
     res.json(rows)
   } catch (error) {
