@@ -145,7 +145,7 @@ const getNutritionForFoodById = async (req, res) => {
     rows = await db.any(SQL)
     food = await db.any(SQL2)
     
-    rows = [{"#ofNutrients": rows.length}, ...food, ...rows]
+    rows = [{food}, {nutrients: rows.length, nutrientList: rows}]
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: `getNutritionForFoodById() ${error}` })
