@@ -1,19 +1,21 @@
 #!/bin/bash
+password=$1
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 pushd "$parent_path"
 
-psql -d food -U usda -W < abbreviated.sql
-psql -d food -U usda -W < data_sources_link.sql
-psql -d food -U usda -W < data_sources.sql
-psql -d food -U usda -W < dd_code_desc.sql
-psql -d food -U usda -W < food_description.sql
-psql -d food -U usda -W < food_group_description.sql
-psql -d food -U usda -W < footnotes.sql
-psql -d food -U usda -W < langual_factor_description.sql
-psql -d food -U usda -W < langual_factor.sql
-psql -d food -U usda -W < nutrient_data.sql
-psql -d food -U usda -W < nutrient_definition.sql
-psql -d food -U usda -W < source_code.sql
-psql -d food -U usda -W < weight.sql
+
+PGPASSWORD="$password" psql -d food -U usda < abbreviated.sql
+PGPASSWORD="$password" psql -d food -U usda < data_sources_link.sql
+PGPASSWORD="$password" psql -d food -U usda < data_sources.sql
+PGPASSWORD="$password" psql -d food -U usda < dd_code_desc.sql
+PGPASSWORD="$password" psql -d food -U usda < food_description.sql
+PGPASSWORD="$password" psql -d food -U usda < food_group_description.sql
+PGPASSWORD="$password" psql -d food -U usda < footnotes.sql
+PGPASSWORD="$password" psql -d food -U usda < langual_factor_description.sql
+PGPASSWORD="$password" psql -d food -U usda < langual_factor.sql
+PGPASSWORD="$password" psql -d food -U usda < nutrient_data.sql
+PGPASSWORD="$password" psql -d food -U usda < nutrient_definition.sql
+PGPASSWORD="$password" psql -d food -U usda < source_code.sql
+PGPASSWORD="$password" psql -d food -U usda < weight.sql
 
 popd
