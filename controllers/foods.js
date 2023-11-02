@@ -117,7 +117,7 @@ async function foodCategoriesById (req, res) {
     SQL=`SELECT * FROM food_description WHERE foodgroup_code = '${req.params.id}'`
     const rows = await db.any(SQL)
     // console.log(rows)
-    output = {categories: row[0]}
+    output = {categories: rows[0]}
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error.message })
