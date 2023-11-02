@@ -32,7 +32,7 @@ postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${pro
 #### Retrieve all info about a particular food
 /food/{id}/nutrition/
 
-#### Retrieve food and nutrion data by search term
+#### Retrieve food and nutrition data by search term
 /food/nutrition/{term}
 
 #### Retrieve list of all nutrients
