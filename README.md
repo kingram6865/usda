@@ -1,12 +1,12 @@
 # USDA
 
-This project is the prototype for a full stack app which uses information from the USDA Nutrient database to retrieve and display nutritional data about foods in JSON format.
+This project is the prototype for a full stack app which uses information from the USDA Nutrient database to retrieve and display nutritional data for most foods.
 
 ## Setup
 
 Create a `.env` file with Postgres database parameters and HOST parameter for server:
 ```
-HOST=<FDQN or IP>
+HOST=<FQDN or IP>
 DBUSER=<postgres user>
 DBPW=<postgres user password>
 DBHOST=<postgres server>
@@ -26,43 +26,29 @@ postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${pro
 
 ### Endpoints
 
-#### Test endpoint, returns a preselected food id
-/food
+- <span style="color:Yellow">/food</span> - <span style="color:LightBlue">Test endpoint, returns a preselected food id</span>
 
-#### Food categories (Food Groups)
-/food/categories/:id
+- <span style="color:Yellow">/food/categories/{id}</span> - <span style="color:LightBlue">Food categories (Food Groups)</span>
 
-#### Retrieve all info about a particular food
-/food/{id}/nutrition/
+- <span style="color:Yellow">/food/{id}/nutrients/</span> - <span style="color:LightBlue">Retrieve all info about a particular food</span>
 
-#### Retrieve food and nutrition data by search term
-/food/nutrition/{term}
+- <span style="color:Yellow">/food/nutrition/{term}?page=number&limit=n</span> - <span style="color:LightBlue">Retrieve food and nutrition data by search term (`The search term is a string within the food long description. number = 'page number', n = 'items per page'`)</span>
 
-#### Retrieve list of all nutrients
-/food/nutrients
+- <span style="color:Yellow">/food/nutrients</span> - <span style="color:LightBlue">Retrieve list of all nutrients</span>
 
-#### Retrieve nutrient info, search by name
-/food/nutrients/{term}
+- <span style="color:Yellow">/food/nutrients/{term}</span> - <span style="color:LightBlue">Retrieve nutrient info, search by nutrient name</span>
 
-#### Retrieve a list of all nutrients
-/food/nutrients
+- <span style="color:Yellow">/food/nutrients/{id}</span> - <span style="color:LightBlue">Retrieve info about a specific nutrient by id</span>
 
-#### Retrieve a list of all Amino Acids
-/food/nutrients/aminos
+- <span style="color:Yellow">/food/nutrients/aminos</span> - <span style="color:LightBlue">Retrieve a list of all Amino Acids</span>
 
-#### Retrieve a list of all Essential Amino Acids
-/food/nutrients/aminos/essential
+- <span style="color:Yellow">/food/nutrients/aminos/essential</span> - <span style="color:LightBlue">Retrieve a list of all Essential Amino Acids</span>
 
-#### Retrieve info about a specific nutrient by id
-/food/nutrients/{id}
+### Endpoints Not yet implemented
 
-### Endpoints (Not yet implemented)
+- <span style="color:Red">/food/{id}/nutrients/aminos</span> - <span style="color:LightBlue">Retrieve foods that contain any of the nine essential amino acids</span>
 
-#### Retrieve foods that contain any of the nine essential amino acids
-/food/{id}/nutrients/aminos
-
-#### Retrieve foods that contain the named amino in the minimum quantity
-/food/nutrients/aminos/{term}/{quantity}
+- <span style="color:Red">/food/nutrients/aminos/{term}/{quantity}</span> - <span style="color:LightBlue">Retrieve foods that contain the named amino in the minimum quantity</span>
 
 ## Frontend - Web App
 
