@@ -12,6 +12,15 @@ async function executeSql(sql) {
   }
 }
 
+async function getTableInfo(req, res) {
+  let result
+  SQL = ""
+  try {
+    result = await executeSql(SQL)
+  } catch(err) {
+    res.status(500).json({ error: error.message })
+  }
+}
 
 async function sampleFood (req, res) {  
   try {
@@ -95,6 +104,7 @@ async function foodCategories (req, res) {
     SQL=`SELECT fdgrp_cd AS "group code", fdgrp_desc AS description FROM food_group_description`
     const rows = await db.any(SQL)
     // console.log(rows)
+    console.log(output)
     output = {itemCount: rows[0].length, items: rows[0]}
     res.json(output)
   } catch (error) {
@@ -103,11 +113,14 @@ async function foodCategories (req, res) {
 }
 
 async function getFoodByCategory (req, res) {  
+  let output
+  let term = `%${req.params.term}%`
+  console.log(term)
   try {
-    SQL=`select count(*) from food_description WHERE foodgroup_code IN (SELECT fdgrp_cd FROM food_group_description WHERE fdgrp_desc ILIKE '%${req.param.term}%')`
+    SQL=`select * from food_description WHERE foodgroup_code IN (SELECT fdgrp_cd FROM food_group_description WHERE fdgrp_desc ILIKE '${term}')`
     const rows = await db.any(SQL)
-    console.log(rows)
-    res.json(rows)
+    output = {result_count: rows.length ,search_category: req.params.term, results: rows}
+    res.json(output)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -118,8 +131,7 @@ async function foodCategoriesById (req, res) {
   try {
     SQL=`SELECT * FROM food_description WHERE foodgroup_code = '${req.params.id}'`
     const rows = await db.any(SQL)
-    console.log(rows)
-    output = {itemCount: rows[0].length, categories: rows[0]}
+    output = {number_of_items_in_category: rows.length, items: rows}
     res.json(output)
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -209,7 +221,7 @@ const getAllNutrients = async (req, res) => {
 const getNutrientByName = async (req, res) => {
   let rows
   try {
-    SQL=`SELECT * FROM nutrient_data WHERE nutrdesc LIKE '%${req.params.term}%'`
+    SQL=`SELECT * FROM nutrient_definition WHERE lower(nutrdesc) LIKE lower('%${req.params.term}%')`
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
@@ -220,7 +232,7 @@ const getNutrientByName = async (req, res) => {
 const getNutrientById = async (req, res) => {
   let rows = {result: 'In progress'}
   try {
-    SQL=`SELECT * from nutrient_definition WHERE nutr_no = ${req.params.id}`
+    SQL=`SELECT * from nutrient_definition WHERE nutr_no = '${req.params.id}'`
     rows = await db.any(SQL)
     res.json(rows)
   } catch (error) {
@@ -229,9 +241,11 @@ const getNutrientById = async (req, res) => {
 }
 
 const getFoodData = async (req, res) => {
-  let rows
+  // /food/nutrition/dairy?limit=25&page=1
+  let rows, results
+  const pageMax = 50
   const page = parseInt(req.query.page) 
-  const limit = (req.query.limit > 10) ? 10 : parseInt(req.query.limit)
+  const limit = (req.query.limit > pageMax) ? pageMax : parseInt(req.query.limit)
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
 
@@ -290,31 +304,38 @@ const getFoodData = async (req, res) => {
   }
 
   try {
-    SQL=`  SELECT 
-    a.ndb_no, 
-    a.long_desc, 
-    a.foodgroup_code,
-    b.nutr_no, 
-    c.nutrdesc,
-    b.nutr_val,
-    c.units
-  FROM food_description a 
-  LEFT JOIN nutrient_data b on a.ndb_no = b.ndb_no 
-  LEFT JOIN nutrient_definition c on b.nutr_no = c.nutr_no
-  WHERE 
-    LOWER(a.long_desc) LIKE '%${req.params.term}%' 
-  AND 
-    a.foodgroup_code IS NOT NULL 
-  ORDER by a.ndb_no`
+    SQL=`SELECT 
+      a.ndb_no, 
+      a.long_desc, 
+      a.foodgroup_code,
+      b.nutr_no, 
+      c.nutrdesc,
+      b.nutr_val,
+      c.units
+    FROM food_description a 
+    LEFT JOIN nutrient_data b on a.ndb_no = b.ndb_no 
+    LEFT JOIN nutrient_definition c on b.nutr_no = c.nutr_no
+    WHERE 
+      LOWER(a.long_desc) LIKE '%${req.params.term}%' 
+    AND 
+      a.foodgroup_code IS NOT NULL 
+    ORDER by a.ndb_no`
 
     rows = await db.any(SQL)
-    let results = rows.reduce(aggregate)
-    // results.unshift({"itemsRetrieved": results.length})    
-    results.forEach(element => console.log('\x1b[36m', element.ndb_no, '\x1b[0m',  '\x1b[32m', element.description, '\x1b[0m'))
+    console.log("================", rows.length, rows[0])
+    
+    // results = rows.reduce(aggregate)
+    // console.log("================", results)
+    // // results.unshift({"itemsRetrieved": results.length})    
+    results = rows
+    results.forEach(element => console.log('\x1b[36m', element.ndb_no, '\x1b[0m',  '\x1b[32m', element.long_desc, '\x1b[0m'))
+
+    // console.log(results)
+    // console.log(results.slice(startIndex, endIndex))
 
     let data = {
       "Total Results": results.length,
-      "Results per page": `${limit} - Max 10 results per page`,
+      "Results per page": `${limit} - Max ${pageMax} results per page`,
       pages: Math.ceil(results.length/limit),
       next: "",
       previous: "",
