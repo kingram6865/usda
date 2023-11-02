@@ -111,11 +111,13 @@ async function getFoodByCategory (req, res) {
   }
 }
 
-async function foodCategoriesById (req, res) {  
+async function foodCategoriesById (req, res) {
+  let output
   try {
-    SQL=`SELECT * FROM food_category WHERE code = '${req.params.id}'`
+    SQL=`SELECT * FROM food_description WHERE foodgroup_code = '${req.params.id}'`
     const rows = await db.any(SQL)
-    console.log(rows)
+    // console.log(rows)
+    output = {categories: row[0]}
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -128,7 +130,7 @@ const getFoodByTerm = async (req, res) => {
     // const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE '%${req.params.term}%' and data_type NOT LIKE 'branded_food'`
     const SQL = `SELECT * FROM food_description WHERE LOWER(long_desc) LIKE lower('%${req.params.term.replace(/\s+/g,'\%')}%')`
     rows = await db.any(SQL)
-    rows = [{"totalRecords": rows.length}, ...rows]
+    rows = {"totalRecords": rows.length, items: rows}
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error.message })
