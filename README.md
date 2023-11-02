@@ -29,6 +29,9 @@ postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${pro
 #### Test endpoint, returns a preselected food id
 /food
 
+#### Food categories (Food Groups)
+/food/categories/:id
+
 #### Retrieve all info about a particular food
 /food/{id}/nutrition/
 
