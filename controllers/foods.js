@@ -95,8 +95,8 @@ async function foodCategories (req, res) {
     SQL=`SELECT fdgrp_cd AS "group code", fdgrp_desc AS description FROM food_group_description`
     const rows = await db.any(SQL)
     // console.log(rows)
-    output = {categories: rows[0]}
-    res.json(rows)
+    output = {itemCount: rows[0].length, items: rows[0]}
+    res.json(output)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -119,8 +119,8 @@ async function foodCategoriesById (req, res) {
     SQL=`SELECT * FROM food_description WHERE foodgroup_code = '${req.params.id}'`
     const rows = await db.any(SQL)
     console.log(rows)
-    output = {categories: rows[0]}
-    res.json(rows)
+    output = {itemCount: rows[0].length, categories: rows[0]}
+    res.json(output)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
