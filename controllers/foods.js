@@ -141,7 +141,7 @@ const getNutritionForFoodById = async (req, res) => {
     // const SQL = `select food_nutrient.id, food_nutrient. ndb_no, food_nutrient.nutrient_id, nutrient.name, food_nutrient.amount, nutrient.unit_name from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient. ndb_no = ${req.params.id}`
     // const SQL = `SELECT nutrient_data.*, nutrient_definition.* FROM nutrient_data RIGHT JOIN nutrient_definition on nutrient_data.nutr_no = nutrient_definition.nutr_no WHERE food_description.ndb_no = ${req.params.id} AND nutrient_data.nutr_val > 0`
     const SQL = `SELECT * FROM nutrient_data RIGHT JOIN nutrient_definition ON nutrient_definition.nutr_no = nutrient_data.nutr_no WHERE nutrient_data.ndb_no = '${req.params.id}' AND nutrient_data.nutr_val > 0`
-    const SQL2 = `SELECT * FROM food_description WHERE ndb_no = ${req.params.id}`
+    const SQL2 = `SELECT * FROM food_description WHERE ndb_no = '${req.params.id}'`
     rows = await db.any(SQL)
     food = await db.any(SQL2)
     console.log(rows)
