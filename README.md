@@ -28,6 +28,8 @@ postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${pro
 
 - <span style="color:Yellow">/food</span> - <span style="color:LightBlue">Test endpoint, returns a preselected food id</span>
 
+- <span style="color:Yellow">/food/categories</span> - <span style="color:LightBlue">Food categories (Food Groups)</span>
+  
 - <span style="color:Yellow">/food/categories/{id}</span> - <span style="color:LightBlue">Food categories (Food Groups)</span>
 
 - <span style="color:Yellow">/food/{id}/nutrients/</span> - <span style="color:LightBlue">Retrieve all info about a particular food</span>

@@ -105,7 +105,7 @@ async function foodCategories (req, res) {
     const rows = await db.any(SQL)
     // console.log(rows)
     console.log(output)
-    output = {itemCount: rows[0].length, items: rows[0]}
+    output = {itemCount: rows.length, items: rows}
     res.json(output)
   } catch (error) {
     res.status(500).json({ error: error.message })
