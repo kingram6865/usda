@@ -300,15 +300,9 @@ const getFoodData = async (req, res) => {
     ORDER by a.ndb_no, b.nutr_no`
 
     rows = await db.any(SQL)
-    console.log("================\n Rows provided: ", rows.length, "\n", rows[0])
+    // console.log("================\n Rows provided: ", rows.length, "\n", rows[0])
     
     results = rows.reduce(aggregate)
-    // console.log("================", results)
-    // // results.unshift({"itemsRetrieved": results.length})    
-    // results.forEach(element => console.log('\x1b[36m', element.ndb_no, '\x1b[0m',  '\x1b[32m', element.long_desc, '\x1b[0m'))
-
-    // console.log(results)
-    // console.log(results.slice(startIndex, endIndex))
 
     let data = {
       "Total Results": results.length,
@@ -320,7 +314,7 @@ const getFoodData = async (req, res) => {
       results: results.slice(startIndex, endIndex)
     }
 
-    if (endIndex < rows.length) {
+    if (endIndex < results.length) {
       data.next = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page + 1}&limit=${limit}`
     }
 
