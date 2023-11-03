@@ -26,7 +26,6 @@ async function sampleFood (req, res) {
   try {
     SQL=`SELECT * FROM food_description WHERE  ndb_no = '01047'`
     const rows = await db.any(SQL)
-    // console.log(rows)
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -101,7 +100,6 @@ async function foodCategories (req, res) {
   try {
     SQL=`SELECT fdgrp_cd AS "group code", fdgrp_desc AS description FROM food_group_description`
     const rows = await db.any(SQL)
-    // console.log(rows)
     console.log(output)
     output = {itemCount: rows.length, items: rows}
     res.json(output)
@@ -139,7 +137,6 @@ async function foodCategoriesById (req, res) {
 const getFoodByTerm = async (req, res) => {
   let rows
   try {
-    // const SQL = `SELECT * FROM food WHERE LOWER(description) LIKE '%${req.params.term}%' and data_type NOT LIKE 'branded_food'`
     const SQL = `SELECT * FROM food_description WHERE LOWER(long_desc) LIKE lower('%${req.params.term.replace(/\s+/g,'\%')}%')`
     rows = await db.any(SQL)
     rows = {"totalRecords": rows.length, items: rows}
@@ -152,8 +149,6 @@ const getFoodByTerm = async (req, res) => {
 const getNutritionForFoodById = async (req, res) => {
   let rows, food
   try {
-    // const SQL = `select food_nutrient.id, food_nutrient. ndb_no, food_nutrient.nutrient_id, nutrient.name, food_nutrient.amount, nutrient.unit_name from food_nutrient RIGHT JOIN nutrient on food_nutrient.nutrient_id = nutrient.id WHERE food_nutrient. ndb_no = ${req.params.id}`
-    // const SQL = `SELECT nutrient_data.*, nutrient_definition.* FROM nutrient_data RIGHT JOIN nutrient_definition on nutrient_data.nutr_no = nutrient_definition.nutr_no WHERE food_description.ndb_no = ${req.params.id} AND nutrient_data.nutr_val > 0`
     const SQL = `SELECT * FROM nutrient_data RIGHT JOIN nutrient_definition ON nutrient_definition.nutr_no = nutrient_data.nutr_no WHERE nutrient_data.ndb_no = '${req.params.id}' AND nutrient_data.nutr_val > 0`
     const SQL2 = `SELECT * FROM food_description WHERE ndb_no = '${req.params.id}'`
     rows = await db.any(SQL)
@@ -185,8 +180,6 @@ const getAllNutrients = async (req, res) => {
   const limit = (req.query.limit) ? (parseInt(req.query.limit) > pageMax) ? pageMax : parseInt(req.query.limit) : 10
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
-  // console.log(`${req.protocol}://${req.get('Host')}${req.baseUrl} ${req.originalUrl.split('?')[0]}`)
-  // console.log(`${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}`)
 
   try {
     SQL=`SELECT * FROM nutrient_definition`
@@ -199,7 +192,6 @@ const getAllNutrients = async (req, res) => {
       "previous": "",
       pages: Math.ceil(rows.length/limit),
       "results": rows.slice(startIndex, endIndex)
-      // "results": rows
     }
 
     if (endIndex < rows.length) {
@@ -240,20 +232,15 @@ const getNutrientById = async (req, res) => {
 }
 
 const getFoodData = async (req, res) => {
-  // /food/nutrition/dairy?limit=25&page=1
   let rows, results
   const pageMax = 10
   const page = (req.query.page) ? parseInt(req.query.page) : 1
   const limit = (req.query.limit > pageMax) ? pageMax : parseInt(req.query.limit)
-
-  console.log(`getFoodData() Line 249: limit = ${limit} and it should be ${pageMax}.`)
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
 
   function aggregate(final, current, counter) {
     let output = []
-    // console.log(counter, final, current)
-    // console.log(counter, JSON.stringify(final, null, 2))
 
     if (counter === 1) {
       output = [
@@ -300,8 +287,6 @@ const getFoodData = async (req, res) => {
     ORDER by a.ndb_no, b.nutr_no`
 
     rows = await db.any(SQL)
-    // console.log("================\n Rows provided: ", rows.length, "\n", rows[0])
-    
     results = rows.reduce(aggregate)
 
     let data = {
@@ -321,7 +306,6 @@ const getFoodData = async (req, res) => {
       next: "",
       previous: "",
       pages: Math.ceil(results.length/limit),
-      // results: (limit) ? results.slice(0, limit) : results
       results: results.slice(startIndex, endIndex)
     }
 
@@ -332,19 +316,6 @@ const getFoodData = async (req, res) => {
     if (startIndex > 0) {
       data.previous = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page - 1}&limit=${limit}`
     }
-    // if (endIndex < results.length) {
-    //   data.next = {
-    //     page: page + 1,
-    //     limit: limit
-    //   }
-    // }
-
-    // if (startIndex > 0) {
-    //   data.previous = {
-    //     page: page - 1,
-    //     limit: limit
-    //   }
-    // }
 
     res.json(data)
   } catch (error) {

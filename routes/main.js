@@ -6,7 +6,7 @@ router.get('/food/search/:term', food.getFoodByTerm)
 router.get('/food/nutrients/aminos', food.getAllAminos)
 router.get('/food/nutrients/aminos/essential', food.getAllEssentialAminos)
 router.get('/food/nutrients', food.getAllNutrients)
-/* /food/nutrition/dairy?limit=25&page=1 */
+/* Example: /food/nutrition/dairy?limit=25&page=1 */
 router.get('/food/nutrition/:term', food.getFoodData)
 router.get('/food/nutrients/id/:id', food.getNutrientById)
 router.get('/food/nutrients/name/:term', food.getNutrientByName)
