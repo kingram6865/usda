@@ -12,8 +12,13 @@ const config = {
   ssl: ssl
 }
 
+function disconnect() {
+  pg.end();
+}
+
 const db = pg(config)
 
 module.exports = {
-  db
+  db,
+  disconnect
 }
