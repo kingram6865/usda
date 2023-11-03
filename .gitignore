@@ -3,3 +3,4 @@ node_modules
 old_*
 controllers/*test*
 data/
+temp
