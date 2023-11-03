@@ -26,7 +26,7 @@ async function sampleFood (req, res) {
   try {
     SQL=`SELECT * FROM food_description WHERE  ndb_no = '01047'`
     const rows = await db.any(SQL)
-    console.log(rows)
+    // console.log(rows)
     res.json(rows)
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -41,8 +41,6 @@ async function getAllAminos (req, res) {
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
   const aminos = "('alanine', 'arginine', 'asparagine', 'aspartic acid', 'cysteine', 'glutamine', 'glutamic acid', 'glycine', 'histidine', 'isoleucine', 'leucine', 'lysine', 'methionine', 'phenylalanine', 'proline', 'serine', 'threonine', 'tryptophan', 'tyrosine', 'valine')"
-
-  console.log(startIndex, endIndex)
 
   try {
     SQL=`SELECT * FROM nutrient_definition WHERE lower(nutrdesc) IN ${aminos} ORDER BY nutrdesc`
@@ -182,8 +180,9 @@ const getFoodById = async (req, res) => {
 
 const getAllNutrients = async (req, res) => {
   let rows
+  let pageMax = 10
   const page = (req.query.page) ? parseInt(req.query.page) : 1
-  const limit = (req.query.limit) ? (parseInt(req.query.limit) > 10) ? 10 : parseInt(req.query.limit) : 10
+  const limit = (req.query.limit) ? (parseInt(req.query.limit) > pageMax) ? pageMax : parseInt(req.query.limit) : 10
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
   // console.log(`${req.protocol}://${req.get('Host')}${req.baseUrl} ${req.originalUrl.split('?')[0]}`)
@@ -255,7 +254,7 @@ const getFoodData = async (req, res) => {
     let firstItem = {
       ndb_no: final.ndb_no,
       description: final.long_desc,
-      food_category_id: foodgroup_code,
+      food_category_id: final.foodgroup_code,
       nutrients: [
         {
           foodId: final.ndb_no, 
@@ -269,37 +268,67 @@ const getFoodData = async (req, res) => {
     
     let intermediate = (Array.isArray(final)) ? final.find(x => x.nutr_no === current.nutr_no) : firstItem
 
-      if (intermediate) {
-        intermediate.nutrients.push({
-          foodId: current.ndb_no, 
-          nutrientId: current.nutr_no,
-          nutrientName: current.nutrdesc,
-          amount: current.nutr_val,
+
+    if (intermediate) {
+      // console.log("Branch 1 (intermediate): ", intermediate)
+      intermediate.nutrients = [...intermediate.nutrients, 
+        {
+          ndb_no: current.ndb_no, 
+          nutr_no: current.nutr_no,
+          nutrdesc: current.nutrdesc,
+          nutr_val: current.nutr_val,
           units: current.units
-        })
-    
-        if (Array.isArray(final)) {
-          output = [...final]
-        } else {
-          output = [intermediate]
         }
-      } else {    
-        output = (Array.isArray(final)) ? [...final] : Array()
-        output.push({
-          ndb_no: current. ndb_no,
-          description: current.long_desc,
-          food_category_id: current.foodgroup_code,
-          nutrients: [
-            {
-              foodId: current. ndb_no, 
-              nutrientId: current.nutr_no,
-              nutrientName: current.nutrdesc,
-              amount: current.nutr_val,
-              units: current.units
-            }
-          ]
-        })
+      ]
+      // intermediate.nutrients.push({
+      //   ndb_no: current.ndb_no, 
+      //   nutr_no: current.nutr_no,
+      //   nutrdesc: current.nutrdesc,
+      //   nutr_val: current.nutr_val,
+      //   units: current.units
+      // })
+  
+      if (Array.isArray(final)) {
+        output = [...final]
+      } else {
+        console.log(intermediate)
+        output = [intermediate]
       }
+    } else {
+      // console.log("Branch 2 (intermediate): ", intermediate)
+      output = (Array.isArray(final)) ? [...final] : Array()
+      output = [...output, 
+        {
+            ndb_no: current. ndb_no,
+            long_desc: current.long_desc,
+            foodgroup_code: current.foodgroup_code,
+            nutrients: [
+              {
+                ndb_no: current.ndb_no, 
+                nutr_no: current.nutr_no,
+                nutrdesc: current.nutrdesc,
+                nutr_val: current.nutr_val,
+                units: current.units
+              }
+            ]
+          }
+      ]
+
+      // output.push({
+      //   ndb_no: current. ndb_no,
+      //   long_desc: current.long_desc,
+      //   foodgroup_code: current.foodgroup_code,
+      //   nutrients: [
+      //     {
+      //       ndb_no: current.ndb_no, 
+      //       nutr_no: current.nutr_no,
+      //       nutrdesc: current.nutrdesc,
+      //       nutr_val: current.nutr_val,
+      //       units: current.units
+      //     }
+      //   ]
+      // })
+    }
       return output
   }
 
@@ -319,16 +348,15 @@ const getFoodData = async (req, res) => {
       LOWER(a.long_desc) LIKE '%${req.params.term}%' 
     AND 
       a.foodgroup_code IS NOT NULL 
-    ORDER by a.ndb_no`
+    ORDER by a.ndb_no, b.nutr_no`
 
     rows = await db.any(SQL)
-    console.log("================", rows.length, rows[0])
+    console.log("================\n Rows provided: ", rows.length, "\n", rows[0])
     
-    // results = rows.reduce(aggregate)
+    results = rows.reduce(aggregate)
     // console.log("================", results)
     // // results.unshift({"itemsRetrieved": results.length})    
-    results = rows
-    results.forEach(element => console.log('\x1b[36m', element.ndb_no, '\x1b[0m',  '\x1b[32m', element.long_desc, '\x1b[0m'))
+    // results.forEach(element => console.log('\x1b[36m', element.ndb_no, '\x1b[0m',  '\x1b[32m', element.long_desc, '\x1b[0m'))
 
     // console.log(results)
     // console.log(results.slice(startIndex, endIndex))
@@ -336,30 +364,38 @@ const getFoodData = async (req, res) => {
     let data = {
       "Total Results": results.length,
       "Results per page": `${limit} - Max ${pageMax} results per page`,
-      pages: Math.ceil(results.length/limit),
       next: "",
       previous: "",
+      pages: Math.ceil(results.length/limit),
       // results: (limit) ? results.slice(0, limit) : results
       results: results.slice(startIndex, endIndex)
     }
 
-    if (endIndex < results.length) {
-      data.next = {
-        page: page + 1,
-        limit: limit
-      }
+    if (endIndex < rows.length) {
+      data.next = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page + 1}&limit=${limit}`
     }
 
     if (startIndex > 0) {
-      data.previous = {
-        page: page - 1,
-        limit: limit
-      }
+      data.previous = `${req.protocol}://${req.get('Host')}${req.baseUrl}${req.path}?page=${page - 1}&limit=${limit}`
     }
+    // if (endIndex < results.length) {
+    //   data.next = {
+    //     page: page + 1,
+    //     limit: limit
+    //   }
+    // }
+
+    // if (startIndex > 0) {
+    //   data.previous = {
+    //     page: page - 1,
+    //     limit: limit
+    //   }
+    // }
 
     res.json(data)
   } catch (error) {
     res.status(500).json({ error: error.message })   
+    console.log(error)
   }
 
 }
