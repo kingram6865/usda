@@ -242,92 +242,41 @@ const getNutrientById = async (req, res) => {
 const getFoodData = async (req, res) => {
   // /food/nutrition/dairy?limit=25&page=1
   let rows, results
-  const pageMax = 50
-  const page = parseInt(req.query.page) 
+  const pageMax = 10
+  const page = (req.query.page) ? parseInt(req.query.page) : 1
   const limit = (req.query.limit > pageMax) ? pageMax : parseInt(req.query.limit)
+
+  console.log(`getFoodData() Line 249: limit = ${limit} and it should be ${pageMax}.`)
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
 
   function aggregate(final, current, counter) {
     let output = []
+    // console.log(counter, final, current)
+    // console.log(counter, JSON.stringify(final, null, 2))
 
-    let firstItem = {
-      ndb_no: final.ndb_no,
-      description: final.long_desc,
-      food_category_id: final.foodgroup_code,
-      nutrients: [
+    if (counter === 1) {
+      output = [
         {
-          foodId: final.ndb_no, 
-          nutrientId: final.nutr_no,
-          nutrientName: final.nutrdesc,
-          amount: final.nutr_val,
-          units: final.units
-        },
-      ]    
-    }
-    
-    let intermediate = (Array.isArray(final)) ? final.find(x => x.nutr_no === current.nutr_no) : firstItem
-
-
-    if (intermediate) {
-      // console.log("Branch 1 (intermediate): ", intermediate)
-      intermediate.nutrients = [...intermediate.nutrients, 
-        {
-          ndb_no: current.ndb_no, 
-          nutr_no: current.nutr_no,
-          nutrdesc: current.nutrdesc,
-          nutr_val: current.nutr_val,
-          units: current.units
+          ndb_no: final.ndb_no,
+          long_desc: final.long_desc,
+          foodgroup_code: final.foodgroup_code,
+          nutrients: [{nutr_no: final.nutr_no, nutrdesc: final.nutrdesc, nutr_val: final.nutr_val, units: final.units}, {nutr_no: current.nutr_no, nutrdesc: current.nutrdesc, nutr_val: current.nutr_val, units: current.units}]
         }
       ]
-      // intermediate.nutrients.push({
-      //   ndb_no: current.ndb_no, 
-      //   nutr_no: current.nutr_no,
-      //   nutrdesc: current.nutrdesc,
-      //   nutr_val: current.nutr_val,
-      //   units: current.units
-      // })
-  
-      if (Array.isArray(final)) {
+    } else {
+      if (final.find(x => x.ndb_no === current.ndb_no)) {
+        let foundIndex = final.findIndex(x => x.ndb_no === current.ndb_no)
+        final[foundIndex].nutrients.push({nutr_no: current.nutr_no, nutrdesc: current.nutrdesc, nutr_val: current.nutr_val, units: current.units})
         output = [...final]
       } else {
-        console.log(intermediate)
-        output = [intermediate]
+        output = [...final, {
+          ndb_no: current.ndb_no,
+          long_desc: current.long_desc,
+          foodgroup_code: current.foodgroup_code,
+          nutrients: [{nutr_no: current.nutr_no, nutrdesc: current.nutrdesc, nutr_val: current.nutr_val, units: current.units}]          
+        }]
       }
-    } else {
-      // console.log("Branch 2 (intermediate): ", intermediate)
-      output = (Array.isArray(final)) ? [...final] : Array()
-      output = [...output, 
-        {
-            ndb_no: current. ndb_no,
-            long_desc: current.long_desc,
-            foodgroup_code: current.foodgroup_code,
-            nutrients: [
-              {
-                ndb_no: current.ndb_no, 
-                nutr_no: current.nutr_no,
-                nutrdesc: current.nutrdesc,
-                nutr_val: current.nutr_val,
-                units: current.units
-              }
-            ]
-          }
-      ]
-
-      // output.push({
-      //   ndb_no: current. ndb_no,
-      //   long_desc: current.long_desc,
-      //   foodgroup_code: current.foodgroup_code,
-      //   nutrients: [
-      //     {
-      //       ndb_no: current.ndb_no, 
-      //       nutr_no: current.nutr_no,
-      //       nutrdesc: current.nutrdesc,
-      //       nutr_val: current.nutr_val,
-      //       units: current.units
-      //     }
-      //   ]
-      // })
     }
       return output
   }
