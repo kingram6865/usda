@@ -305,6 +305,17 @@ const getFoodData = async (req, res) => {
     results = rows.reduce(aggregate)
 
     let data = {
+      "Notes": ["Food quantity is for 100g of the indicated food", `To calculate the “amount of nutrient in edible portion of 1 pound (453.6 grams) as purchased,” use the following formula: \n
+      Y = V*4.536*[(100-R)/100] where\n
+      Y = nutrient value per 1 pound as purchased,
+      V = nutrient value per 100 g (Nutr_Val in the Nutrient Data file), and
+      R = percent refuse (Refuse in the Food Description file).`,
+      `The percentage yield of cooked, edible meat from 1 pound of raw meat with refuse can be determined by using the following formula:
+      Y = (Wc/453.6)*100
+      where
+      Y = percentage yield of cooked edible meat per 1 pound as purchased, and
+      Wc = weight of cooked, edible meat in grams`
+    ],
       "Total Results": results.length,
       "Results per page": `${limit} - Max ${pageMax} results per page`,
       next: "",
