@@ -12,6 +12,8 @@ const TIME = new Date()
 
 const app = express()
 app.use(cors())
+
+/* dev, combined or common */
 app.use(logger('common'))
 app.use(express.json())
 // app.use(express.urlencoded({extended: true}))
