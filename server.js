@@ -7,6 +7,7 @@ const cors = require('cors')
 const logger = require('morgan')
 const routes = require('./routes/main')
 const PORT = parseInt(process.env.PORT) || 3019
+const sslPort = parseInt(process.env.SSLPORT)
 const SERVER = process.env.HOST || 'localhost'
 const TIME = new Date()
 const sslOptions = {
@@ -27,4 +28,4 @@ app.use('/api', routes)
 let httpMessage = `Nutrition API Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
 let httpsMessage = `Nutrition API Secure Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
 app.listen(PORT, () => console.log(httpMessage))
-sslServer.listen(443, () => console.log(httpsMessage))
+sslServer.listen(sslPort, () => console.log(httpsMessage))
