@@ -293,7 +293,7 @@ const getFoodData = async (req, res) => {
       "Notes": ["Food quantity is for 100g of the indicated food", `To calculate the “amount of nutrient in edible portion of 1 pound (453.6 grams) as purchased,” use the following formula: \n
       Y = V*4.536*[(100-R)/100] where\n
       Y = nutrient value per 1 pound as purchased,
-      V = nutrient value per 100 g (Nutr_Val in the Nutrient Data file), and
+      V = nutrient value per 100 g (nutr_val in the nutrients list), and
       R = percent refuse (Refuse in the Food Description file).`,
       `The percentage yield of cooked, edible meat from 1 pound of raw meat with refuse can be determined by using the following formula:
       Y = (Wc/453.6)*100
