@@ -4,3 +4,4 @@ old_*
 controllers/*test*
 data/
 temp
+*.log
