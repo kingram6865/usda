@@ -4,4 +4,6 @@ old_*
 controllers/*test*
 data/
 temp
-*.log
+access.log
+app.log
+errors.log
