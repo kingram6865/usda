@@ -32,6 +32,10 @@ function timeStamp() {
 }
 
 function appLogger(dir) {
+  if (!fs.existsSync(`${dir}/logs`)){
+    fs.mkdirSync(`${dir}/logs`);
+  }
+
   const log = new Console({
     stdout: fs.createWriteStream(path.join(dir, `/logs/app.log`), { flags: 'a' }),
     stderr: fs.createWriteStream(path.join(dir, `/logs/errors.log`), { flags: 'a' }),
