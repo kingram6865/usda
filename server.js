@@ -1,5 +1,5 @@
 const color = require('./utilities/consoleColors')
-const { fileDate, timeStamp, appLogger } = require('./utilities/logging')
+const { appLogger } = require('./utilities/logging')
 
 require('dotenv').config()
 const { Console } = require("console")
@@ -20,12 +20,6 @@ const sslOptions = {
 }
 
 const myLogger = appLogger(__dirname)
-// const myLogger = new Console({
-//   stdout: fs.createWriteStream(path.join(__dirname, `/logs/appLog.log`), { flags: 'a' }),
-//   stderr: fs.createWriteStream(path.join(__dirname, `/logs/appErrors.log`), { flags: 'a' }),
-// })
-
-// const accessLogStream = fs.createWriteStream(path.join(__dirname, `/logs/${fileDate()}_access.log`), { flags: 'a' })
 const accessLogStream = fs.createWriteStream(path.join(__dirname, `/logs/access.log`), { flags: 'a' })
 
 const app = express()
