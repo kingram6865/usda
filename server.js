@@ -1,6 +1,10 @@
 const color = require('./utilities/consoleColors')
+const { fileDate, timeStamp, appLogger } = require('./utilities/logging')
+
 require('dotenv').config()
+const { Console } = require("console")
 const fs = require('fs')
+const path = require('path')
 const https = require('https')
 const express = require('express')
 const cors = require('cors')
@@ -15,17 +19,29 @@ const sslOptions = {
   cert: fs.readFileSync(process.env.CERT)
 }
 
+const myLogger = appLogger(__dirname)
+// const myLogger = new Console({
+//   stdout: fs.createWriteStream(path.join(__dirname, `/logs/appLog.log`), { flags: 'a' }),
+//   stderr: fs.createWriteStream(path.join(__dirname, `/logs/appErrors.log`), { flags: 'a' }),
+// })
+
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, `/logs/${fileDate()}_access.log`), { flags: 'a' })
+const accessLogStream = fs.createWriteStream(path.join(__dirname, `/logs/access.log`), { flags: 'a' })
+
 const app = express()
 const sslServer = https.createServer(sslOptions, app);
 app.use(cors())
 
 /* dev, combined or common */
-app.use(logger('common'))
+app.use(logger('common', { stream: accessLogStream }))
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }))
 app.use(express.json())
 app.use('/api', routes)
 
-let httpMessage = `Nutrition API Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
-let httpsMessage = `Nutrition API Secure Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
-app.listen(PORT, () => console.log(httpMessage))
-sslServer.listen(sslPort, () => console.log(httpsMessage))
+if (process.env.HOST === 'localhost') {
+  let httpsMessage = `Nutrition API Secure Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
+  sslServer.listen(sslPort, () => myLogger.log(httpsMessage))
+} else if (process.env.HOST === 'apollo') {
+  let httpMessage = `Nutrition API Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
+  app.listen(PORT, () => myLogger.log(httpMessage))
+}
