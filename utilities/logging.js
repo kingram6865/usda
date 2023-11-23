@@ -33,8 +33,8 @@ function timeStamp() {
 
 function appLogger(dir) {
   const log = new Console({
-    stdout: fs.createWriteStream(path.join(dir, `/logs/appLog.log`), { flags: 'a' }),
-    stderr: fs.createWriteStream(path.join(dir, `/logs/Errors.log`), { flags: 'a' }),
+    stdout: fs.createWriteStream(path.join(dir, `/logs/app.log`), { flags: 'a' }),
+    stderr: fs.createWriteStream(path.join(dir, `/logs/errors.log`), { flags: 'a' }),
   })
   
   return log
