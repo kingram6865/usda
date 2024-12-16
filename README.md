@@ -27,6 +27,12 @@ Also, in time it will be extended to a Mobile app (iOS and Android).
 2023 11 01
 - The API is built and functioning on several endpoints. More endpoints to follow
 
+## Requirements
+
+- Node.js (I recommend installing node using [NVM](https://github.com/nvm-sh/nvm))
+- PostgreSQL
+- React
+
 ## Setup
 
 Create a `.env` file with Postgres database parameters and HOST parameter for server:
@@ -55,7 +61,7 @@ postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${pro
 
 - <span style="color:Yellow">/food/categories</span> - <span style="color:LightBlue">All Food categories (Food Groups)</span>
   
-- <span style="color:Yellow">/food/categories/{id}</span> - <span style="color:LightBlue">Specific Food category (Food Groups)</span>
+- <span style="color:Yellow">/food/category/byid/{id}</span> - <span style="color:LightBlue">Specific Food category (Food Groups)</span>
 
 - <span style="color:Yellow">/food/`{id}`/nutrients/</span> - <span style="color:LightBlue">Retrieve all info about a particular food</span>
 
@@ -73,9 +79,9 @@ postgres://${process.env.DBUSER}:${process.env.DBPW}@${process.env.DBHOST}:${pro
 
 ### Endpoints Not yet implemented
 
-- <span style="color:Red">/food/{id}/nutrients/aminos</span> - <span style="color:LightBlue">Retrieve foods that contain any of the nine essential amino acids in a quantity > 0</span>
+- <span style="color:Red">/food/`{id}`/nutrients/aminos</span> - <span style="color:LightBlue">Retrieve foods that contain any of the nine essential amino acids in a quantity > 0</span>
 
-- <span style="color:Red">/food/nutrients/aminos/`{food}`/`{quantity}`</span> - <span style="color:LightBlue">Retrieve foods that contain the named amino in the minimum quantity</span>
+- <span style="color:Red">/food/nutrients/aminos/`{food search term}`/`{quantity}`</span> - <span style="color:LightBlue">Retrieve foods that contain the named amino in the minimum quantity</span>
 
 ## Frontend - Web App
 
