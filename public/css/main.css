@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+header, .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  /* text-align: center; */
+}
+
+.main {
+  background-color: burlywood;
+  width: 30vw;
+}
+
+.api-results {
+  background-color: #c4f185;
+  width: 60vw;
+}
+
+.nodefault {
+  list-style-type: none;
+}
