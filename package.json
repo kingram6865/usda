@@ -8,7 +8,9 @@
     "dev": "nodemon server.js"
   },
   "nodemonConfig": {
-    "ignore": ["client/*"]
+    "ignore": [
+      "client/*"
+    ]
   },
   "keywords": [
     "food",
@@ -35,6 +37,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
     "npm-check-updates": "^16.14.6",
-    "pg-promise": "^11.5.4"
+    "pg-promise": "^11.5.4",
+    "pug": "^3.0.2"
   }
 }
