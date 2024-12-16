@@ -10,7 +10,7 @@ const express = require('express')
 const cors = require('cors')
 const logger = require('morgan')
 const routes = require('./routes/main')
-const PORT = parseInt(process.env.PORT) || 3019
+const PORT = parseInt(process.env.PORT) || 3020
 const sslPort = parseInt(process.env.SSLPORT)
 const SERVER = process.env.HOST || 'localhost'
 const TIME = new Date()
@@ -24,6 +24,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, `/logs/access.
 
 const app = express()
 const sslServer = https.createServer(sslOptions, app);
+
 app.use(cors())
 
 /* dev, combined or common */
@@ -32,9 +33,27 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }))
 app.use(express.json())
 app.use('/api', routes)
 
+/* Set up html templating */
+app.engine('.html', require('pug').__express);
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'html');
+
+app.get('/', (req, res) => {
+  res.render('root', {})
+})
+
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
+app.get('/api', (req, res) => {
+  res.render('root', {})
+})
+
 if (process.env.HOST === 'localhost') {
-  let httpsMessage = `Nutrition API Secure Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
-  sslServer.listen(sslPort, () => myLogger.log(httpsMessage))
+  let httpsMessage = `Nutrition API Secure Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, SSL Port: ${color.brightYellow}${sslPort}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
+  sslServer.listen(sslPort, 'localhost', () => myLogger.log(httpsMessage))
+} else if ((process.env.HOST === 'localhost') && (process.env.DEV)) {
+  let httpMessage = `Nutrition API Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
+  app.listen(PORT, () => myLogger.log(httpMessage))
 } else if (process.env.HOST === 'apollo') {
   let httpMessage = `Nutrition API Server Started -- Server: ${color.brightYellow}${SERVER}${color.Reset}, Port: ${color.brightYellow}${PORT}${color.Reset}, start time: (${color.brightGreen}${TIME.toLocaleString()}${color.Reset})`
   app.listen(PORT, () => myLogger.log(httpMessage))
