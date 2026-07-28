@@ -1,7 +1,8 @@
 # Dev Notes
 
-
-
+2026 07 17 0418 PDT
+The model has to be restructured due to fundamental changes in USDA's data
+model presentation.
 
 
 
@@ -19,16 +20,16 @@ Archive File: sr28asc.zip [CSV - ASCII files delimited with commas and quotes]
 
 Files:
 
-- sr28_doc.pdf - READ ME - Documentation and User Guide - Composition of Foods Raw, 
+- sr28_doc.pdf - READ ME - Documentation and User Guide - Composition of Foods Raw,
 - Processed, Prepared - USDA National Nutrient Database for Standard Reference, Release 28
-- DATA_SRC.txt - (Sources of Data) 
+- DATA_SRC.txt - (Sources of Data)
 - DATSRCLN.txt - (Sources of Data Link) relationship between the Sources of Data file and the Nutrient Data file.
 - DERIV_CD.txt - (Data Derivation Code Description)
 - FD_GROUP.txt - (Food Group Description)
 - FOOD_DES.txt - (Food Description)
 - FOOTNOTE.txt - (Footnote)
 - LANGDESC.txt - (LanguaL Factors Description)
-- LANGUAL.txt  - (LanguaL Factor) 
+- LANGUAL.txt  - (LanguaL Factor)
 - NUT_DATA.txt - (Nutrient Data)
 - NUTR_DEF.txt - (Nutrient Definition)
 - SRC_CD.txt   - (Source Code)
@@ -131,44 +132,44 @@ Food has 9 distinct data types:
 
 
 
-|  Column      |  Type   | Collation | Nullable | 
+|  Column      |  Type   | Collation | Nullable |
 | --------------- | ------- | --------- | -------- |
-| fdc_id           | bigint  |           |          | 
-| data_type        | text    |           |          | 
-| description      | text    |           |          | 
-| food_category_id | integer |           |          | 
-| publication_date | date    |           |          | 
+| fdc_id           | bigint  |           |          |
+| data_type        | text    |           |          |
+| description      | text    |           |          |
+| food_category_id | integer |           |          |
+| publication_date | date    |           |          |
 
 ### Table: food_category
 | Column    |  Type   | Collation | Nullable |
 | --------- | ------- | --------- | -------- |
-| id          | integer |           |          | 
-| code        | integer |           |          | 
-| description | text    |           |          | 
+| id          | integer |           |          |
+| code        | integer |           |          |
+| description | text    |           |          |
 
 ### Table: food_nutrient
 | Column       |  Type   | Collation | Nullable |
 | ------------ | ------- | --------- | -------- |
-| id                | integer |           |          | 
-| fdc_id            | integer |           |          | 
-| nutrient_id       | integer |           |          | 
-| amount            | numeric |           |          | 
-| data_points       | integer |           |          | 
-| derivation_id     | bigint  |           |          | 
-| min               | text    |           |          | 
-| max               | text    |           |          | 
-| median            | text    |           |          | 
-| footnote          | text    |           |          | 
-| min_year_acquired | integer |           |          | 
+| id                | integer |           |          |
+| fdc_id            | integer |           |          |
+| nutrient_id       | integer |           |          |
+| amount            | numeric |           |          |
+| data_points       | integer |           |          |
+| derivation_id     | bigint  |           |          |
+| min               | text    |           |          |
+| max               | text    |           |          |
+| median            | text    |           |          |
+| footnote          | text    |           |          |
+| min_year_acquired | integer |           |          |
 
 ### Table: nutrient
-| Column    |  Type  | Collation | Nullable | 
+| Column    |  Type  | Collation | Nullable |
 |-------------|--------|-----------|----------|
-| id           | bigint |           |          | 
-| name         | text   |           |          | 
-| unit_name    | text   |           |          | 
-| nutrient_nbr | text   |           |          | 
-| rank         | text   |           |          | 
+| id           | bigint |           |          |
+| name         | text   |           |          |
+| unit_name    | text   |           |          |
+| nutrient_nbr | text   |           |          |
+| rank         | text   |           |          |
 
 ## Indexes
 
@@ -185,50 +186,50 @@ Lists foods from all categories of data type
 
 
   ```
-SELECT 
+SELECT
     fdc_id,
     data_type,
-    description, 
+    description,
     food_category_id
   FROM food
-  WHERE 
-    LOWER(description) LIKE '%garlic%' 
+  WHERE
+    LOWER(description) LIKE '%garlic%'
   ORDER by data_type, description;
   ```
 
 ### Retrieve a specific food item by string value
   ```
-  SELECT 
-    a.fdc_id, 
-    a.description, 
-    a.food_category_id, 
-    b.nutrient_id, 
-    b.amount 
-  FROM food a 
-  LEFT JOIN food_nutrient b on a.fdc_id = b.fdc_id 
-  WHERE 
-    LOWER(description) LIKE '%garlic%' 
-  AND 
-    food_category_id IS NOT NULL 
+  SELECT
+    a.fdc_id,
+    a.description,
+    a.food_category_id,
+    b.nutrient_id,
+    b.amount
+  FROM food a
+  LEFT JOIN food_nutrient b on a.fdc_id = b.fdc_id
+  WHERE
+    LOWER(description) LIKE '%garlic%'
+  AND
+    food_category_id IS NOT NULL
   ORDER by a.fdc_id;
   ```
 ### Retrieve a specific food by string, including nutrient info.
 
   ```
-  SELECT 
-    a.fdc_id, 
-    a.description, 
-    a.food_category_id, 
-    b.nutrient_id, 
+  SELECT
+    a.fdc_id,
+    a.description,
+    a.food_category_id,
+    b.nutrient_id,
     c.name,
     b.amount,
     c.unit_name
-  FROM food a 
-  LEFT JOIN food_nutrient b on a.fdc_id = b.fdc_id 
+  FROM food a
+  LEFT JOIN food_nutrient b on a.fdc_id = b.fdc_id
   LEFT JOIN nutrient c on b.nutrient_id = c.id
-  WHERE 
-    LOWER(description) LIKE '%garlic%' 
-  AND 
-    food_category_id IS NOT NULL 
+  WHERE
+    LOWER(description) LIKE '%garlic%'
+  AND
+    food_category_id IS NOT NULL
   ORDER by a.fdc_id;
 ```
