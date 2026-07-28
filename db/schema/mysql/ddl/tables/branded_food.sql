@@ -1,0 +1,23 @@
+CREATE TABLE `branded_food` (
+  `fdc_id` INTEGER,
+  `brand_owner` VARCHAR(128),
+  `brand_name` VARCHAR(64),
+  `subbrand_name` VARCHAR(64),
+  `gtin_upc` VARCHAR(32),
+  `ingredients` TEXT,
+  `not_a_significant_source_of` TEXT,
+  `serving_size` DOUBLE,
+  `serving_size_unit` VARCHAR(16),
+  `household_serving_fulltext` VARCHAR(255),
+  `branded_food_category` TEXT,
+  `data_source` VARCHAR(16),
+  `package_weight` VARCHAR(32),
+  `modified_date` DATE,
+  `available_date` DATE,
+  `market_country` VARCHAR(16),
+  `discontinued_date` DATE,
+  `preparation_state_code` VARCHAR(16),
+  `trade_channel` VARCHAR(255),
+  `short_description` VARCHAR(64),
+  `material_code` INTEGER
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
